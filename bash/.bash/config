@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+  source /usr/local/opt/chruby/share/chruby/chruby.sh
+  source /usr/local/opt/chruby/share/chruby/auto.sh
+fi
+
+if [[ -t "$fd"  || -p /dev/stdin ]]; then
+    venvwrap="virtualenvwrapper.sh"
+    /usr/bin/which $venvwrap
+    if [ $? -eq 0 ]; then
+        venvwrap=`/usr/bin/which $venvwrap > /dev/null 2>&1`
+        source $venvwrap
+    fi
+fi
+
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "("${ref#refs/heads/}")"
+}

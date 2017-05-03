@@ -1,0 +1,46 @@
+#!/bin/sh
+export EDITOR="vim"
+
+# export TERM=screen-256color
+export TERM=xterm-256color
+export LC_TYPE=en_US.UTF-8
+
+export go_libs="-lm"
+export go_flags="-g -Wall -O3"
+
+# Firefox and Chrome write values used to generate session keys to flat
+# file. Used for wireshark analysis of encrypted traffic.
+if [ -f "~/Documents/sslkey.log" ]; then 
+    export SSLKEYLOGFILE=~/Documents/sslkey.log
+fi
+
+# access vmware fusion command utilities.
+if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
+  export PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
+fi
+
+# Set gopath
+export GOPATH=$HOME/Projects/go_projects
+# Set GOROOT based install path
+if [ -d /usr/local/opt/go/libexec/bin ];
+then
+  export PATH=$PATH:/usr/local/opt/go/libexec/bin
+fi
+
+# Set Node path
+if [ -d $HOME/.node_packages ];
+then
+    export NODE_PATH=$HOME/.node_packages:$NODE_PATH
+    export PATH=$HOME/.node_packages/bin:$PATH
+else
+    export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+    export PATH=/usr/local/lib/node_modules/bin:$PATH
+fi
+
+BLUE="\[\033[0;34m\]"
+RED="\[\033[0;31m\]"
+YELLOW="\[\033[0;33m\]"
+GREEN="\[\033[0;32m\]"
+SKYBLUE="\[\033[1;36m\]"
+
+PS1="$SKYBLUE[\h]$RED\w$BLUE:\j$YELLOW \$(parse_git_branch)$GREEN\\n$ "

@@ -1,0 +1,16 @@
+[user]
+	name = Adam Garren
+	email = garren@users.noreply.github.com
+[alias]
+	co = checkout
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[core]
+	editor = vim
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = true
+[push]
+	default = current

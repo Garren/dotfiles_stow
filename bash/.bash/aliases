@@ -1,0 +1,28 @@
+#!/bin/bash
+
+alias be='bundle exec '
+alias gs='git status '
+alias gap='git add -p'
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias gk='gitk --all&'
+alias glodag='git log --all --decorate --graph --oneline'
+
+alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
+
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -al'
+
+# full color tmux terminal for vim colorscheme support
+alias tmux="TERM=screen-256color-bce tmux"
+
+if [[ "$OSTYPE" == 'linux-gnu' ]]; then
+  alias gx='gitx --all'
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+elif [[ "$OSTYPE" == 'darwin'* ]]; then
+  alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && say DNS cache flushed'
+fi
+

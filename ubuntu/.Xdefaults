@@ -1,0 +1,1 @@
+rxvt -geometry 130x60 -bg black -fg gray -cr white -fn "Lucida Console-11" -sr -sl 5000 -j -cr white -tn rxvt -e bash -li
