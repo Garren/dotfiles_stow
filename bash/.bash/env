@@ -16,7 +16,7 @@ fi
 
 # access vmware fusion command utilities.
 if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
-  export PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
+  PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
 fi
 
 # Set gopath
@@ -24,17 +24,22 @@ export GOPATH=$HOME/Projects/go_projects
 # Set GOROOT based install path
 if [ -d /usr/local/opt/go/libexec/bin ];
 then
-  export PATH=$PATH:/usr/local/opt/go/libexec/bin
+  PATH=$PATH:/usr/local/opt/go/libexec/bin
 fi
 
 # Set Node path
 if [ -d $HOME/.node_packages ];
 then
     export NODE_PATH=$HOME/.node_packages:$NODE_PATH
-    export PATH=$HOME/.node_packages/bin:$PATH
+    PATH=$HOME/.node_packages/bin:$PATH
 else
     export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
-    export PATH=/usr/local/lib/node_modules/bin:$PATH
+    PATH=/usr/local/lib/node_modules/bin:$PATH
+fi
+
+# 
+if which ruby >/dev/null && which gem >/dev/null; then
+    PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
 if [ -x /usr/bin/dircolors ]; then
@@ -48,3 +53,4 @@ GREEN="\[\033[0;32m\]"
 SKYBLUE="\[\033[1;36m\]"
 
 PS1="$SKYBLUE[\h]$RED\w$BLUE:\j$YELLOW \$(parse_git_branch)$GREEN\\n$ "
+export PATH=$PATH:$HOME/bin
