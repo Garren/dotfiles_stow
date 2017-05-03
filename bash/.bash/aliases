@@ -1,5 +1,4 @@
 #!/bin/bash
-
 alias be='bundle exec '
 alias gs='git status '
 alias gap='git add -p'
@@ -10,6 +9,10 @@ alias gk='gitk --all&'
 alias glodag='git log --all --decorate --graph --oneline'
 
 alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
+
+if [ -x /usr/bin/dircolors ]; then
+    alias ls='ls --color=auto'
+fi
 
 alias ll='ls -l'
 alias la='ls -a'

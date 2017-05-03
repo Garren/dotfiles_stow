@@ -37,6 +37,10 @@ else
     export PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
+if [ -x /usr/bin/dircolors ]; then
+   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+
 BLUE="\[\033[0;34m\]"
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
