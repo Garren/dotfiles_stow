@@ -9,13 +9,13 @@ Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
+Plug 'scrooloose/nerdcommenter'
 
 call plug#end()
 
-filetype off
-
 filetype plugin indent on
 
+set term=screen-256color
 if !exists("g:syntax_on")
     syntax enable
 endif
@@ -58,6 +58,8 @@ set incsearch
 
 " match parens
 set showmatch
+" bold both parens but only highlight the one under the cursor
+hi MatchParen cterm=bold ctermbg=none ctermfg=magenta 
 
 " number lines relative to current line
 " but give real current line number
@@ -166,6 +168,9 @@ set splitbelow
 " in gui environment
 :set title titlestring=%<%F%=%l/%L-%P titlelen=70
 
+let mapleader = "\<space>"
+let maplocalleader = "\\"
+
 "easier buffer navigating
 nnoremap <Leader>bb :buffers<CR>:buffer<Space>
 nnoremap <Leader>bn :bn<CR>
@@ -173,9 +178,6 @@ nnoremap <Leader>bp :bp<CR>
 
 " map jj to esc in insert
 inoremap jj <esc>
-
-let mapleader = "\<space>"
-let maplocalleader = "\\"
 
 " open a file
 nnoremap <Leader>o :CtrlP<CR>
@@ -235,3 +237,29 @@ let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+" This is the default extra key bindings
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+nnoremap <c-p> :FZF<cr>
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
