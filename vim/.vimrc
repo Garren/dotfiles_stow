@@ -10,6 +10,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdcommenter'
+Plug 'ervandew/supertab'
 
 call plug#end()
 
@@ -134,8 +135,9 @@ set laststatus=2
 
 " Useful status information at bottom of screen
 " needs fugitive
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
+"
 " use an undo file (default location is 
 " current directory)
 set undofile
@@ -221,11 +223,6 @@ iabbrev ssig --<cr>Adam Garren<cr>me@adamgarren.net
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 
-" syntastic - recommended
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -235,14 +232,157 @@ nnoremap <leader>sr <esc>:SyntasticReset<cr>
 " disable syntastic for html
 let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'mode': 'LightlineMode',
+      \   'ctrlpmark': 'CtrlPMark',
+      \ },
+      \ 'component_expand': {
+      \   'syntastic': 'SyntasticStatuslineFlag',
+      \ },
+      \ 'component_type': {
+      \   'syntastic': 'error',
+      \ },
+      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ }
+
+function! LightlineModified()
+  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:t')
+  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = ''  " edit here for cool mark
+      let branch = fugitive#head()
+      return branch !=# '' ? mark.branch : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! CtrlPMark()
+  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
+    call lightline#link('iR'[g:lightline.ctrlp_regex])
+    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+          \ , g:lightline.ctrlp_next], 0)
+  else
+    return ''
+  endif
+endfunction
+
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlPStatusFunc_1',
+  \ 'prog': 'CtrlPStatusFunc_2',
+  \ }
+
+function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+  let g:lightline.ctrlp_regex = a:regex
+  let g:lightline.ctrlp_prev = a:prev
+  let g:lightline.ctrlp_item = a:item
+  let g:lightline.ctrlp_next = a:next
+  return lightline#statusline(0)
+endfunction
+
+function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
+  return lightline#statusline(0)
+endfunction
+
+augroup AutoSyntastic
+  autocmd!
+  autocmd BufWritePost *.c,*.cpp call s:syntastic()
+augroup END
+
+function! s:syntastic()
+  SyntasticCheck
+  call lightline#update()
+endfunction
+
+"let g:unite_force_overwrite_statusline = 0
+"let g:vimfiler_force_overwrite_statusline = 0
+"let g:vimshell_force_overwrite_statusline = 0
+
+"if has('statusline')
+"  set laststatus=2
+"  " Broken down into easily includeable segments
+"  set statusline=%<%f\    " Filename
+"  set statusline+=%w%h%m%r " Options
+"  set statusline+=%{fugitive#statusline()} "  Git Hotness
+"  set statusline+=\ [%{&ff}/%Y]            " filetype
+"  set statusline+=\ [%{getcwd()}]          " current dir
+"  set statusline+=%#warningmsg#
+"  set statusline+=%{SyntasticStatuslineFlag()}
+"  set statusline+=%*
+"  let g:syntastic_enable_signs=1
+"  set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+"endif
+
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" This is the default extra key bindings
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
 nnoremap <c-p> :FZF<cr>
 
 " Default fzf layout
