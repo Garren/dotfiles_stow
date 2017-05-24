@@ -11,6 +11,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
@@ -21,22 +23,29 @@ if !exists("g:syntax_on")
     syntax enable
 endif
 
-"syntax on
+syntax on
 "filetype off
 "filetype plugin indent on
 
 set modelines=0
 
 " visual spaces per tab
-set tabstop=4
-
-" number of spaces in tab when editing
-set softtabstop=4
+set tabstop=8
 
 " tabs are spaces
 set expandtab
 
-set shiftwidth=4
+" indenting is 4 spaces
+set shiftwidth=2
+
+" number of spaces in tab when editing
+set softtabstop=2
+
+set autoindent
+
+" set smartindent
+
+" set cindent
 
 " use a purty scheme
 color molokai
@@ -50,6 +59,7 @@ set ignorecase
 " if search string is all upper then
 " assume a case sensitive search
 set smartcase
+
 
 " highlight matches
 set hlsearch
