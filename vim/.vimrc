@@ -10,6 +10,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdcommenter'
+Plug 'mustache/vim-mustache-handlebars'
 
 call plug#end()
 
