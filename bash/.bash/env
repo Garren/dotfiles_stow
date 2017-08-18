@@ -28,19 +28,23 @@ then
 fi
 
 # Set Node path
-if [ -d $HOME/.node_packages ];
-then
-    export NODE_PATH=$HOME/.node_packages:$NODE_PATH
-    PATH=$HOME/.node_packages/bin:$PATH
+if [ -d $HOME/.node_packages ]; then
+  export NODE_PATH=$HOME/.node_packages:$NODE_PATH
+  PATH=$HOME/.node_packages/bin:$PATH
 else
-    export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
-    PATH=/usr/local/lib/node_modules/bin:$PATH
+  export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+  PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
-# 
 if which ruby >/dev/null && which gem >/dev/null; then
-    PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+  PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
+
+if which cargo>/dev/null; then
+  PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+PATH=$PATH:$HOME/bin
 
 if [ -x /usr/bin/dircolors ]; then
    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -53,4 +57,3 @@ GREEN="\[\033[0;32m\]"
 SKYBLUE="\[\033[1;36m\]"
 
 PS1="$SKYBLUE[\h]$RED\w$BLUE:\j$YELLOW \$(parse_git_branch)$GREEN\\n$ "
-export PATH=$PATH:$HOME/bin

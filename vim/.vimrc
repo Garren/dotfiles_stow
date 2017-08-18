@@ -197,6 +197,7 @@ nnoremap <Leader>o :CtrlP<CR>
 " save a file
 nnoremap <leader>w :w<cr>
 
+set clipboard=unnamed,unnamedplus
 " copy and paste to system clipboard
 " <leader>p <leader>y
 vmap <Leader>y "+y
