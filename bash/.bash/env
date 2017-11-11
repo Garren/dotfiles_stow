@@ -11,35 +11,33 @@ export go_flags="-g -Wall -O3"
 # Firefox and Chrome write values used to generate session keys to flat
 # file. Used for wireshark analysis of encrypted traffic.
 if [ -f "~/Documents/sslkey.log" ]; then 
-    export SSLKEYLOGFILE=~/Documents/sslkey.log
+  export SSLKEYLOGFILE=~/Documents/sslkey.log
 fi
 
 # access vmware fusion command utilities.
 if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
-  PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
+  export PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
 fi
 
 # Set gopath
 export GOPATH=$HOME/Projects/go_projects
 # Set GOROOT based install path
-if [ -d /usr/local/opt/go/libexec/bin ];
-then
-  PATH=$PATH:/usr/local/opt/go/libexec/bin
+if [ -d /usr/local/opt/go/libexec/bin ]; then
+  export PATH=$PATH:/usr/local/opt/go/libexec/bin
 fi
 
 # Set Node path
-if [ -d $HOME/.node_packages ];
-then
-    export NODE_PATH=$HOME/.node_packages:$NODE_PATH
-    PATH=$HOME/.node_packages/bin:$PATH
+if [ -d $HOME/.node_packages ]; then
+  export NODE_PATH=$HOME/.node_packages:$NODE_PATH
+  export PATH=$HOME/.node_packages/bin:$PATH
 else
-    export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
-    PATH=/usr/local/lib/node_modules/bin:$PATH
+  export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+  export PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
 # 
 if which ruby >/dev/null && which gem >/dev/null; then
-    PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+  export PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
 if [ -x /usr/bin/dircolors ]; then
