@@ -51,4 +51,10 @@ GREEN="\[\033[0;32m\]"
 SKYBLUE="\[\033[1;36m\]"
 
 PS1="$SKYBLUE[\h]$RED\w$BLUE:\j$YELLOW \$(parse_git_branch)$GREEN\\n$ "
+
+# homebrew sbin
+if [ -d "/usr/local/sbin" ]; then
+  export PATH=/usr/local/sbin:$PATH
+fi
+
 export PATH=$PATH:$HOME/bin
