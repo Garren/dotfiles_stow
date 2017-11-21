@@ -6,3 +6,4 @@ fi
 if [[ -s ~/.profile ]] ; then 
     source ~/.profile
 fi
+

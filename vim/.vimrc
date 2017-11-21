@@ -13,6 +13,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -197,6 +198,7 @@ nnoremap <Leader>o :CtrlP<CR>
 " save a file
 nnoremap <leader>w :w<cr>
 
+set clipboard=unnamed,unnamedplus
 " copy and paste to system clipboard
 " <leader>p <leader>y
 vmap <Leader>y "+y
