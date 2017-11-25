@@ -65,4 +65,14 @@ if [ -d "/usr/local/sbin" ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
 
+if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi 
+
+if hash hbase 2>/dev/null && [ -d "/usr/local/opt/hbase" ]; then
+  export HBASE_HOME="/usr/local/opt/hbase"    
+  export CLASSPATH=$CLASSPATH:`hbase classpath`
+fi
+
+
 export PATH=$PATH:$HOME/bin
