@@ -31,6 +31,10 @@ fi
 
 if [ -d /keybase/private/garren ]; then
   function lb() {
-    vim /keybase/private/garren/logbook/$(date '+%Y-%m-%d').md
+    if [ -z "$1" ]; then
+      vim /keybase/private/garren/logbook/$(date '+%Y-%m-%d').md
+    else
+      vim /keybase/private/garren/logbook/tool-$1.md
+    fi
   }
 fi
