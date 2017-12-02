@@ -2,9 +2,11 @@
 
 if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
   if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+    # OSX - homebrew
     source /usr/local/opt/chruby/share/chruby/chruby.sh
     source /usr/local/opt/chruby/share/chruby/auto.sh
   elif [ -f /usr/local/share/chruby/chruby.sh ]; then
+    # Linux - source 
     source /usr/local/share/chruby/chruby.sh
     source /usr/local/share/chruby/auto.sh
   fi
