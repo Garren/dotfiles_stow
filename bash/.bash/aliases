@@ -29,3 +29,12 @@ elif [[ "$OSTYPE" == 'darwin'* ]]; then
   alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && say DNS cache flushed'
 fi
 
+if [ -d /keybase/private/garren ]; then
+  function lb() {
+    if [ -z "$1" ]; then
+      vim /keybase/private/garren/logbook/$(date '+%Y-%m-%d').md
+    else
+      vim /keybase/private/garren/logbook/tool-$1.md
+    fi
+  }
+fi
