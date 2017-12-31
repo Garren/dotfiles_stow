@@ -1,8 +1,14 @@
 #!/bin/sh
 export EDITOR="vim"
 
-# export TERM=screen-256color
-export TERM=xterm-256color
+if [ "$HOSTNAME" = sdf ]; then 
+  export MAIL=/mail/${LOGNAME:?}
+  export TERM=vt100
+  stty erase '^?' echoe
+else
+  export TERM=xterm-256color
+fi
+
 export LC_TYPE=en_US.UTF-8
 
 export go_libs="-lm"
@@ -50,6 +56,8 @@ if [ -x /usr/bin/dircolors ]; then
 else
   export CLICOLOR=1
   export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+# sdf .profile
+# export LSCOLORS=Gxfxcxdxbxegedabagacad
 fi
 
 BLUE="\[\033[0;34m\]"
