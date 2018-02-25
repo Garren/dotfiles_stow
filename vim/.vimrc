@@ -14,6 +14,7 @@ Plug 'ervandew/supertab'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
+Plug 'elmcast/elm-vim'
 
 call plug#end()
 
