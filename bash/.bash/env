@@ -46,9 +46,8 @@ if which ruby >/dev/null && which gem >/dev/null; then
   export PATH=$PATH:"$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
-# Standard ML - this is going to bite you if multiple versions are installed...
 if which sml >/dev/null; then
-  export PATH=$PATH:"/usr/local/Cellar/$(brew list --versions smlnj | tr ' ' '/')/bin"
+  export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
 fi
 
 if which cargo>/dev/null; then
