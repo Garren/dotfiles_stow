@@ -20,7 +20,7 @@ call plug#end()
 
 filetype plugin indent on
 
-set term=screen-256color
+"set term=screen-256color
 if !exists("g:syntax_on")
     syntax enable
 endif
