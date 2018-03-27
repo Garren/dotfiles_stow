@@ -19,7 +19,8 @@ alias la='ls -a'
 alias lla='ls -al'
 
 # full color tmux terminal for vim colorscheme support
-alias tmux="TERM=screen-256color-bce tmux"
+#alias tmux="TERM=screen-256color-bce tmux"
+alias ssh='TERM=xterm-256color ssh'
 
 if [[ "$OSTYPE" == 'linux-gnu' ]]; then
   alias gx='gitx --all'

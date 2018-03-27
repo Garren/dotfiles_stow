@@ -6,8 +6,6 @@ if [ "$HOSTNAME" = sdf ]; then
   export MAIL=/mail/${LOGNAME:?}
   export TERM=vt100
   stty erase '^?' echoe
-#else
-  #export TERM=tmux-256color
 fi
 
 export LC_TYPE=en_US.UTF-8
