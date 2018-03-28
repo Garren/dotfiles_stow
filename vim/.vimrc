@@ -218,8 +218,8 @@ noremap <leader>- ddp
 noremap <leader>_ ddkkp
 
 " upcase previous word (note: iunmap)
-inoremap <c-u> <esc>viwU
-nnoremap <c-u> viwU
+"inoremap <c-u> <esc>viwU
+"nnoremap <c-u> viwU
 
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
