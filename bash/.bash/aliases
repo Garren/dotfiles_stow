@@ -8,6 +8,10 @@ alias gd='git diff'
 alias gk='gitk --all&'
 alias glodag='git log --all --decorate --graph --oneline'
 
+docker-prune () {
+  docker rmi $(docker images | grep "none" | awk '{print $3}')
+}
+
 alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
 
 if [ -x /usr/bin/dircolors ]; then
