@@ -15,6 +15,7 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
+Plug 'elixir-editors/vim-elixir'
 
 call plug#end()
 
