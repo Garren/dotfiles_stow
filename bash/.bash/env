@@ -13,6 +13,9 @@ export LC_TYPE=en_US.UTF-8
 export go_libs="-lm"
 export go_flags="-g -Wall -O3"
 
+# Enable shell history for elixir & erlang
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # Firefox and Chrome write values used to generate session keys to flat
 # file. Used for wireshark analysis of encrypted traffic.
 if [ -f "~/Documents/sslkey.log" ]; then 
