@@ -66,13 +66,21 @@ else
 # export LSCOLORS=Gxfxcxdxbxegedabagacad
 fi
 
-BLUE="\[\033[0;34m\]"
-RED="\[\033[0;31m\]"
-YELLOW="\[\033[0;33m\]"
-GREEN="\[\033[0;32m\]"
-SKYBLUE="\[\033[1;36m\]"
+export COLOR_RED="\[\033[0;31m\]"
+export COLOR_LIGHTRED="\[\033[1;31m\]"
+export COLOR_GREEN="\[\033[0;32m\]"
+export COLOR_LIGHTGREEN="\[\033[1;32m\]"
+export COLOR_YELLOW="\[\033[0;33m\]"
+export COLOR_LIGHTYELLOW="\[\033[1;33m\]"
+export COLOR_BLUE="\[\033[0;34m\]"
+export COLOR_LIGHTBLUE="\[\033[1;34m\]"
+export COLOR_PURPLE="\[\033[0;35m\]"
+export COLOR_LIGHTPURPLE="\[\033[1;35m\]"
+export COLOR_CYAN="\[\033[0;36m\]"
+export COLOR_LIGHTCYAN="\[\033[1;36m\]"
+export COLOR_WHITE="\[\033[1;37m\]"
 
-PS1="$SKYBLUE[\h]$RED\w$BLUE:\j$YELLOW \$(parse_git_branch)$GREEN\\n$ "
+PS1="$COLOR_LIGHTCYAN[\h]$COLOR_LIGHTRED\w$COLOR_LIGHTPURPLE:\j$COLOR_LIGHTYELLOW \$(parse_git_branch)$COLOR_GREEN\\n$ "
 
 # homebrew sbin
 if [ -d "/usr/local/sbin" ]; then
