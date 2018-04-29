@@ -55,6 +55,10 @@ if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if which jenv>/dev/null; then
+  eval "$(jenv init -)"
+fi
+
 PATH=$PATH:$HOME/bin
 
 if [ -x /usr/bin/dircolors ]; then
