@@ -12,6 +12,10 @@ docker-prune () {
   docker rmi $(docker images | grep "none" | awk '{print $3}')
 }
 
+markdown () {
+  pandoc -f markdown -t html $1 | sed s/[”“]/'"'/g | lynx -stdin
+}
+
 alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
 
 if [ -x /usr/bin/dircolors ]; then
