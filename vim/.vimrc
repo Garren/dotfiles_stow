@@ -16,6 +16,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'junegunn/vader.vim'
 
 call plug#end()
 
