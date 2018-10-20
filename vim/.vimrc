@@ -1,5 +1,9 @@
 set nocompatible
 
+if has('python3')
+  silent! python3 1
+endif
+
 call plug#begin("~/.vim/plugged")
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -244,8 +248,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
 nnoremap <leader>sr <esc>:SyntasticReset<cr>
+
 " disable syntastic for html
 let syntastic_mode_map = { 'passive_filetypes': ['html'] }
+
+let g:syntastic_cucumber_cucumber_args="--profile syntastic"
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
