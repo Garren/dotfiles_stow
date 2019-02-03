@@ -1,5 +1,9 @@
 set nocompatible
 
+if has('python3')
+  silent! python3 1
+endif
+
 call plug#begin("~/.vim/plugged")
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -17,6 +21,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'junegunn/vader.vim'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'posva/vim-vue'
 
 call plug#end()
 
@@ -243,9 +249,17 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
+
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+
 nnoremap <leader>sr <esc>:SyntasticReset<cr>
+
 " disable syntastic for html
 let syntastic_mode_map = { 'passive_filetypes': ['html'] }
+
+let g:syntastic_cucumber_cucumber_args="--profile syntastic"
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
