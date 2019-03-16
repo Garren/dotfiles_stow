@@ -56,11 +56,11 @@ if which cargo>/dev/null; then
 fi
 
 
-if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
-  # For Android (java 9 not supported)
-  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-  #export JAVA_HOME=$(/usr/libexec/java_home)
-fi 
+#if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
+#  # For Android (java 9 not supported)
+#  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+#  #export JAVA_HOME=$(/usr/libexec/java_home)
+#fi 
 
 export PATH=$PATH:$HOME/bin
 
