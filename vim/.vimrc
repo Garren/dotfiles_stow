@@ -198,8 +198,8 @@ nnoremap <Leader>bb :buffers<CR>:buffer<Space>
 nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bp :bp<CR>
 
-" map jj to esc in insert
-inoremap jj <esc>
+" map fd to esc in insert
+inoremap fd <esc>
 
 " open a file
 nnoremap <Leader>o :CtrlP<CR>
