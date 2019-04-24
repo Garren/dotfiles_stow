@@ -28,7 +28,10 @@ if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
 fi
 
 ## Set gopath
-#export GOPATH=$HOME/Projects/go_projects
+if which go >/dev/null; then
+  export GOPATH=$HOME/go
+  export PATH=$PATH:$GOPATH/bin
+fi
 ## Set GOROOT based install path
 #if [ -d /usr/local/opt/go/libexec/bin ]; then
 #  export PATH=$PATH:/usr/local/opt/go/libexec/bin
@@ -98,7 +101,6 @@ if hash hbase 2>/dev/null && [ -d "/usr/local/opt/hbase" ]; then
   export HBASE_HOME="/usr/local/opt/hbase"    
   export CLASSPATH=$CLASSPATH:`hbase classpath`
 fi
-
 
 if which direnv>/dev/null; then
   eval "$(direnv hook bash)"
