@@ -23,6 +23,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'junegunn/vader.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'posva/vim-vue'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
