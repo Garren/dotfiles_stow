@@ -2,8 +2,8 @@
 # as of 2.5 it's broken. Be sure to use ruby-2.5.0 instead
 # of ruby-2.5.x or the gem env user installation dir will
 # be screwed up and you won't have access to gems
-install: --no-rdoc --no-ri --env-shebang --user-install
-update: --no-rdoc --no-ri --env-shebang --user-install
+install: --no-rdoc --no-ri --env-shebang
+update: --no-rdoc --no-ri --env-shebang
 
 --- 
 :backtrace: false
