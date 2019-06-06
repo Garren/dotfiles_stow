@@ -5,7 +5,9 @@ bindkey -e
 
 if [ -n "$ZSH_VERSION" ]; then
   if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-    # OSX - homebrew
+    # ~/.ruby-version is currently 2.6.2
+    # If you change this, be sure to blow away your .spacemacs.env as well or
+    # it will be stuck using the previous version of ruby.
     source /usr/local/opt/chruby/share/chruby/chruby.sh
     source /usr/local/opt/chruby/share/chruby/auto.sh
   fi
