@@ -1,24 +1,8 @@
 #!/bin/bash
 
-if [ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ]; then
-  if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-    # OSX - homebrew
-    source /usr/local/opt/chruby/share/chruby/chruby.sh
-    source /usr/local/opt/chruby/share/chruby/auto.sh
-  elif [ -f /usr/local/share/chruby/chruby.sh ]; then
-    # Linux - source 
-    source /usr/local/share/chruby/chruby.sh
-    source /usr/local/share/chruby/auto.sh
-  fi
-fi
-
-if [[ -t "$fd"  || -p /dev/stdin ]]; then
-    venvwrap="virtualenvwrapper.sh"
-    /usr/bin/which $venvwrap
-    if [ $? -eq 0 ]; then
-        venvwrap=`/usr/bin/which $venvwrap > /dev/null 2>&1`
-        source $venvwrap
-    fi
+if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
+  source /usr/local/opt/chruby/share/chruby/chruby.sh
+  source /usr/local/opt/chruby/share/chruby/auto.sh
 fi
 
 function parse_git_branch {

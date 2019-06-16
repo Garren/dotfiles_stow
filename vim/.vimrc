@@ -438,3 +438,5 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
