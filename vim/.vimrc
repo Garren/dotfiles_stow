@@ -388,6 +388,8 @@ function! s:syntastic()
   call lightline#update()
 endfunction
 
+let g:syntastic_disabled_filetypes=['java']
+
 "let g:unite_force_overwrite_statusline = 0
 "let g:vimfiler_force_overwrite_statusline = 0
 "let g:vimshell_force_overwrite_statusline = 0
@@ -414,7 +416,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 nnoremap <c-p> :FZF<cr>
-
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -439,4 +440,4 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+set rtp+=/usr/local/opt/fzf

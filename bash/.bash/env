@@ -2,6 +2,19 @@
 export EDITOR="vim"
 export TZ=:/etc/localtime
 
+if [ -d "$HOME/bin" ]; then
+  export PATH=$PATH:$HOME/bin
+fi
+
+# homebrew sbin
+if [ -d "/usr/local/sbin" ]; then
+  export PATH=/usr/local/sbin:$PATH
+fi
+
+if [ -d "/usr/local/bin" ]; then
+  export PATH=/usr/local/bin:$PATH
+fi
+
 if [ "$HOSTNAME" = sdf ]; then 
   export MAIL=/mail/${LOGNAME:?}
   export TERM=vt100
@@ -42,6 +55,11 @@ else
   export PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
+# gem --user-install is screwed up and this doesn't help
+#if which ruby >/dev/null && which gem >/dev/null; then
+#  export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
+#fi
+
 if which sml >/dev/null && which brew > /dev/null; then
   export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
 fi
@@ -50,7 +68,12 @@ if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-export PATH=$PATH:$HOME/bin
+#if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
+#  # For Android (java 9 not supported)
+#  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+#  #export JAVA_HOME=$(/usr/libexec/java_home)
+#fi 
+
 
 if [ -x /usr/bin/dircolors ]; then
    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -77,23 +100,6 @@ export COLOR_WHITE="\[\033[1;37m\]"
 
 PS1="$COLOR_LIGHTCYAN[\h]$COLOR_LIGHTRED\w$COLOR_LIGHTPURPLE:\j$COLOR_LIGHTYELLOW \$(parse_git_branch)$COLOR_GREEN\\n$ "
 
-# homebrew sbin
-if [ -d "/usr/local/bin" ]; then
-  export PATH=/usr/local/bin:$PATH
-fi
-
-if [ -d "/usr/local/sbin" ]; then
-  export PATH=/usr/local/sbin:$PATH
-fi
-
-if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
-  export JAVA_HOME=$(/usr/libexec/java_home)
-fi
-
-if hash hbase 2>/dev/null && [ -d "/usr/local/opt/hbase" ]; then
-  export HBASE_HOME="/usr/local/opt/hbase"    
-  export CLASSPATH=$CLASSPATH:`hbase classpath`
-fi
 
 if which direnv>/dev/null; then
   eval "$(direnv hook bash)"
