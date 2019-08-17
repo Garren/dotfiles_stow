@@ -101,6 +101,10 @@ set scrolloff=3
 " next line
 "set autoindent
 
+" write the content of a file automatically if 
+" you call :make
+set autowrite
+
 " show the mode (insert, normal, visual) in the 
 " last line
 set showmode
@@ -441,3 +445,13 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 set rtp+=/usr/local/opt/fzf
+
+" Go-related improvements
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+
+" let g:go_list_type = "quickfix"

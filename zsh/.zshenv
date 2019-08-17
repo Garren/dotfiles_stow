@@ -8,6 +8,9 @@ export PATH=$PATH:$HOME/bin
 if [ -d "/usr/local/sbin" ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
+if [ -d "/usr/local/bin" ]; then
+  export PATH=/usr/local/bin:$PATH
+fi
 
 # GO 
 if which go >/dev/null; then
@@ -42,3 +45,4 @@ if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+export ESHELL=/bin/zsh
