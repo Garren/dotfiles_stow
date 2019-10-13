@@ -4,9 +4,12 @@ if has('python3')
   silent! python3 1
 endif
 
+set rtp+=/usr/local/opt/fzf
+
 call plug#begin("~/.vim/plugged")
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-syntastic/syntastic'
 Plug 'itchyny/lightline.vim'
@@ -206,9 +209,6 @@ nnoremap <Leader>bp :bp<CR>
 " map fd to esc in insert
 inoremap fd <esc>
 
-" open a file
-nnoremap <Leader>o :CtrlP<CR>
-
 " save a file
 nnoremap <leader>w :w<cr>
 
@@ -338,44 +338,13 @@ endfunction
 function! LightlineMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
         \ fname == '__Gundo__' ? 'Gundo' :
         \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
         \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
         \ &ft == 'vimfiler' ? 'VimFiler' :
         \ &ft == 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
-
-function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
-  else
-    return ''
-  endif
-endfunction
-
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-  \ }
-
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-  let g:lightline.ctrlp_regex = a:regex
-  let g:lightline.ctrlp_prev = a:prev
-  let g:lightline.ctrlp_item = a:item
-  let g:lightline.ctrlp_next = a:next
-  return lightline#statusline(0)
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! TagbarStatusFunc(current, sort, fname, ...) abort
     let g:lightline.fname = a:fname
@@ -392,26 +361,9 @@ function! s:syntastic()
   call lightline#update()
 endfunction
 
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
 let g:syntastic_disabled_filetypes=['java']
-
-"let g:unite_force_overwrite_statusline = 0
-"let g:vimfiler_force_overwrite_statusline = 0
-"let g:vimshell_force_overwrite_statusline = 0
-
-"if has('statusline')
-"  set laststatus=2
-"  " Broken down into easily includeable segments
-"  set statusline=%<%f\    " Filename
-"  set statusline+=%w%h%m%r " Options
-"  set statusline+=%{fugitive#statusline()} "  Git Hotness
-"  set statusline+=\ [%{&ff}/%Y]            " filetype
-"  set statusline+=\ [%{getcwd()}]          " current dir
-"  set statusline+=%#warningmsg#
-"  set statusline+=%{SyntasticStatuslineFlag()}
-"  set statusline+=%*
-"  let g:syntastic_enable_signs=1
-"  set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-"endif
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -419,7 +371,7 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-nnoremap <c-p> :FZF<cr>
+nnoremap <c-p> :GFiles<cr>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -443,8 +395,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-
-set rtp+=/usr/local/opt/fzf
 
 " Go-related improvements
 map <C-n> :cnext<CR>

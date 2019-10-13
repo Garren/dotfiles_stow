@@ -10,6 +10,10 @@ export LC_TYPE=en_US.UTF-8
 # emacs mode
 bindkey -e
 
+# fix the delete key
+bindkey "^[[3~"  delete-char
+bindkey "^[3;5~" delete-char
+
 if [ -n "$ZSH_VERSION" ]; then
   if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
     # OSX - homebrew

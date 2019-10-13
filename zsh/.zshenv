@@ -12,6 +12,10 @@ if [ -d "/usr/local/bin" ]; then
   export PATH=/usr/local/bin:$PATH
 fi
 
+# Elixir/Erlang
+# Enable shell history for elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # GO 
 if which go >/dev/null; then
   export GOPATH=$HOME/go
@@ -34,7 +38,8 @@ fi
 
 # SML
 if which sml >/dev/null && which brew > /dev/null; then
-  export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
+  export PATH=/usr/local/smlnj/bin:"$PATH"
+  #export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
 fi
 
 export JAVA_HOME=$(/usr/libexec/java_home)
