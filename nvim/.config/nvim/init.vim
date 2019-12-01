@@ -304,12 +304,7 @@ inoremap fd <esc>
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 
-" Syntastic recommended settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+if has("autocmd")
+autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab
+endif
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
