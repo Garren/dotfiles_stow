@@ -32,10 +32,10 @@ Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
 "Git:
 Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter' not vim-go friendly
 "Var:
 Plug 'scrooloose/nerdcommenter'
-"Plug 'vim-syntastic/syntastic'
+Plug 'itchyny/lightline.vim'
 "Todo
 " Plug 'pangloss/vim-javascript'
 " Plug 'elixir-editors/vim-elixir'
