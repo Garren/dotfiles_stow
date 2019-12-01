@@ -45,6 +45,8 @@ if which go >/dev/null; then
   export GOPATH=$HOME/go
   # export GOPATH=$HOME/.go
 
+  # assume recent version of go
+  export GO111MODULE=auto
   export PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
 
