@@ -18,8 +18,19 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # GO 
 if which go >/dev/null; then
+  # Set the path to the compiler and tooling. Not necessary anymore, but
+  # still used in older documentation
+  # https://www.digitalocean.com/community/tutorials/understanding-the-gopath
+  if which brew>/dev/null; then
+    export GOROOT="$(brew --prefix golang)/libexec"
+  fi
+
+  # Set the root path of a single go workspace 
+  # https://golang.org/doc/code.html#Workspaces
   export GOPATH=$HOME/go
-  export PATH=$PATH:$GOPATH/bin
+  # export GOPATH=$HOME/.go
+
+  export PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
 
 # NODE
@@ -48,6 +59,12 @@ export PATH=$PATH:${JAVA_HOME}/bin
 # RUST
 if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# https://developpaper.com/full-guide-for-the-use-of-fuzzy-finder-fzfvim/
+if which fzf>/dev/null && which fd>/dev/null; then 
+  export FZF_DEFAULT_COMMAND="FD --exclude={.git,.idea,.sass-cache,.node_modules,build,log,.DS_Store} --type f"
+  export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500"
 fi
 
 export ESHELL=/bin/zsh

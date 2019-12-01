@@ -9,7 +9,10 @@ set rtp+=/usr/local/opt/fzf
 call plug#begin("~/.vim/plugged")
 
 Plug '/usr/local/opt/fzf'
+
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vader.vim'
+
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-syntastic/syntastic'
 Plug 'itchyny/lightline.vim'
@@ -18,15 +21,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
+Plug 'powerman/vim-plugin-AnsiEsc'
+
+Plug 'elixir-editors/vim-elixir'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Typescript/Javascript
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
-Plug 'elixir-editors/vim-elixir'
-Plug 'junegunn/vader.vim'
-Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'posva/vim-vue'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 call plug#end()
 
@@ -92,6 +101,7 @@ set number
 set relativenumber
 
 " don't wrap
+nnoremap ff :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<Enter>
 set nowrap
 
 set encoding=utf-8
@@ -205,6 +215,7 @@ let maplocalleader = "\\"
 nnoremap <Leader>bb :buffers<CR>:buffer<Space>
 nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bp :bp<CR>
+nnoremap <Leader>bd :bd<CR>
 
 " map fd to esc in insert
 inoremap fd <esc>
@@ -212,9 +223,8 @@ inoremap fd <esc>
 " save a file
 nnoremap <leader>w :w<cr>
 
-set clipboard=unnamed,unnamedplus
 " copy and paste to system clipboard
-" <leader>p <leader>y
+set clipboard=unnamed,unnamedplus
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
@@ -248,6 +258,18 @@ iabbrev ssig --<cr>Adam Garren<cr>me@adamgarren.net
 " lel   : left one, end of word, left one
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+
+"cmake netrw look like NERDtree
+" Vex, Sex
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 25
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -371,11 +393,16 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-nnoremap <c-p> :GFiles<cr>
+nnoremap <C-p> :Files<CR>
+nnoremap <C-e> :Buffers<CR>
+
 let g:fzf_action = {
+  \ 'ctrl-e': 'edit',
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+
+"nnoremap ff :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))
 
 " Default fzf layout
 " - down / up / left / right
