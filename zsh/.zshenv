@@ -1,5 +1,7 @@
 #!/bin/zsh
+
 export EDITOR="vim"
+export VISUAL="vim"
 
 # Set PATH
 export PATH=$PATH:$HOME/bin
@@ -15,6 +17,19 @@ fi
 # Elixir/Erlang
 # Enable shell history for elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
+
+if which nvim >/dev/null; then
+  export VISUAL="nvim"
+  export EDITOR="vim"
+  export VIMCONFIG=~/.config/nvim
+  export VIMDATA=~/.local/share/nvim
+
+  alias vim=nvim
+  alias vi=nvim
+else
+  export VIMCONFIG=~/.vimrc
+  export VIMDATA=~/.vim
+fi
 
 # GO 
 if which go >/dev/null; then
