@@ -253,6 +253,7 @@ let g:syntastic_loc_list_height = 5
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+let g:syntastic_c_include_dirs = ["/usr/include/c++/7"]
 
 nnoremap <leader>sr <esc>:SyntasticReset<cr>
 
@@ -437,3 +438,5 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+set path+=/usr/include/c++/7
