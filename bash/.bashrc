@@ -1,7 +1,10 @@
 #!/bin/bash
-[ -f ~/.bash/env ] && source ~/.bash/env
-[ -f ~/.bash/config ] && source ~/.bash/config
-[ -f ~/.bash/aliases ] && source ~/.bash/aliases
+# run when not a login shell
+if [[ -f ~/.bash_profile ]] ; then
+    source ~/.bash_profile
+fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f ~/.cargo/env ] && source ~/.cargo/env
+if [[ -f ~/.profile ]] ; then 
+    source ~/.profile
+fi
+

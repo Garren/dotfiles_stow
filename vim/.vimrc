@@ -23,6 +23,7 @@ Plug 'elixir-editors/vim-elixir'
 Plug 'junegunn/vader.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'posva/vim-vue'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -198,8 +199,8 @@ nnoremap <Leader>bb :buffers<CR>:buffer<Space>
 nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bp :bp<CR>
 
-" map jj to esc in insert
-inoremap jj <esc>
+" map fd to esc in insert
+inoremap fd <esc>
 
 " open a file
 nnoremap <Leader>o :CtrlP<CR>
@@ -440,3 +441,4 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 set path+=/usr/include/c++/7
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
