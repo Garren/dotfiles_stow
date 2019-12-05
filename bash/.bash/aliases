@@ -17,6 +17,10 @@ markdown () {
   pandoc -f markdown -t html $1 | sed s/[”“]/'"'/g | lynx -stdin
 }
 
+function t {
+  cd $(mktemp -d /tmp/$1.XXXX)
+}
+
 alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
 
 if [ -x /usr/bin/dircolors ]; then
