@@ -28,9 +28,9 @@ if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
 fi
 
 ## Set gopath
-if which go >/dev/null; then
+if [ -d /usr/local/go ]; then
+  export PATH=$PATH:/usr/local/go/bin;$GOPATH/bin
   export GOPATH=$HOME/go
-  export PATH=$PATH:$GOPATH/bin
 fi
 
 # Set Node path
