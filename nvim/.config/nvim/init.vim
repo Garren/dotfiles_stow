@@ -305,12 +305,11 @@ inoremap fd <esc>
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 
-" Syntastic recommended settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+" GoAlternate for quickly switching between src and test
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+" GoAlt to open in vsplit
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+" ... and split
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+" ... and tabs
+"autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
