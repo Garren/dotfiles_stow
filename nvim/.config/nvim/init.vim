@@ -19,6 +19,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'ctrlpvim/ctrlp.vim'
 "Golang:
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
