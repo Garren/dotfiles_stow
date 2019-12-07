@@ -87,3 +87,7 @@ if which fzf>/dev/null && which fd>/dev/null; then
 fi
 
 export ESHELL=/bin/zsh
+
+if [ -f ~/.secrets/env ]; then
+  source ~/.secrets/env
+fi
