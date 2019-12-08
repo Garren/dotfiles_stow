@@ -7,8 +7,10 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd!
-  autocmd VimEnter * PlugInstall
+
 endif
+
+set encoding=utf8
 
 call plug#begin('~/.config/nvim/plugged')
 "File Search:
@@ -19,6 +21,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'ctrlpvim/ctrlp.vim'
 "Golang:
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
@@ -30,6 +33,7 @@ Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/
 "Snippets:
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
 "Plug 'airblade/vim-gitgutter' not vim-go friendly
@@ -100,8 +104,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "------------
 "allows FZF to open by pressing CTRL-F
 map <C-f> :FZF<CR>
-"allow FZF to search hidden 'dot' files
-let $FZF_DEFAULT_COMMAND = "find -L"
+
+" Nope. pull the default fzf command from env
+"let $FZF_DEFAULT_COMMAND = "find -L"
 
 "FILE BROWSER:
 "-------------
@@ -139,9 +144,12 @@ autocmd! bufwritepost init.vim source %
 "------
 "Allow using mouse helpful for switching/resizing windows
 set mouse+=a
-if &term =~ '^screen'
-  " tmux knows the extended mouse mode
-  set ttymouse=xterm2
+let os=substitute(system('uname'), '\n', '', '')
+if os == 'Linux'
+  if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+  endif
 endif
 
 "TEXT SEARCH:
@@ -218,8 +226,8 @@ set showcmd
 set hidden
 
 " 'enhanced' tab completion for commands
+set wildmode=longest,list,full
 set wildmenu
-set wildmode=list:longest
 
 " don't beep
 set visualbell
