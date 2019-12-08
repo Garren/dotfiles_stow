@@ -80,9 +80,17 @@ if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-# https://developpaper.com/full-guide-for-the-use-of-fuzzy-finder-fzfvim/
-if which fzf>/dev/null && which fd>/dev/null; then 
-  export FZF_DEFAULT_COMMAND="FD --exclude={.git,.idea,.sass-cache,.node_modules,build,log,.DS_Store} --type f"
+if which fzf>/dev/null; then 
+
+  if which rg>/dev/null; then
+    FZF_DEFAULT_COMMAND='rg --files' 
+  elif which fd>/dev/null; then 
+    FZF_DEFAULT_COMMAND="fd --exclude={.git,.idea,.sass-cache,.node_modules,build,log,.DS_Store} --type f"
+  else
+    FZF_DEFAULT_COMMAND='git ls-files'
+  fi
+
+  export FZF_DEFAULT_COMMAND
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500"
 fi
 
