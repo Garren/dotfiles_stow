@@ -4,26 +4,41 @@ if has('python3')
   silent! python3 1
 endif
 
+set rtp+=/usr/local/opt/fzf
+
 call plug#begin("~/.vim/plugged")
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf'
+
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vader.vim'
+
+" Supertab is used to reconsile tab behavior between ultisnips
+" and YCM.
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'vim-syntastic/syntastic'
-Plug 'itchyny/lightline.vim'
+Plug 'ervandew/supertab'
+Plug 'Valloric/YouCompleteMe'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdcommenter'
-Plug 'ervandew/supertab'
+Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'itchyny/lightline.vim'
+
+Plug 'elixir-editors/vim-elixir'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Typescript/Javascript
+Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
-Plug 'elixir-editors/vim-elixir'
-Plug 'junegunn/vader.vim'
-Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'posva/vim-vue'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 call plug#end()
 
@@ -89,6 +104,7 @@ set number
 set relativenumber
 
 " don't wrap
+nnoremap ff :call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --others --cached'}))<Enter>
 set nowrap
 
 set encoding=utf-8
@@ -100,6 +116,10 @@ set scrolloff=3
 " use the indent for the last line for the 
 " next line
 "set autoindent
+
+" write the content of a file automatically if 
+" you call :make
+set autowrite
 
 " show the mode (insert, normal, visual) in the 
 " last line
@@ -154,11 +174,6 @@ set backspace=indent,eol,start
 " always display the status line 
 set laststatus=2
 
-" Useful status information at bottom of screen
-" needs fugitive
-"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
-
-"
 " use an undo file (default location is 
 " current directory)
 set undofile
@@ -198,19 +213,16 @@ let maplocalleader = "\\"
 nnoremap <Leader>bb :buffers<CR>:buffer<Space>
 nnoremap <Leader>bn :bn<CR>
 nnoremap <Leader>bp :bp<CR>
+nnoremap <Leader>bd :bd<CR>
 
 " map fd to esc in insert
 inoremap fd <esc>
 
-" open a file
-nnoremap <Leader>o :CtrlP<CR>
-
 " save a file
 nnoremap <leader>w :w<cr>
 
-set clipboard=unnamed,unnamedplus
 " copy and paste to system clipboard
-" <leader>p <leader>y
+set clipboard=unnamed,unnamedplus
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
@@ -245,177 +257,25 @@ iabbrev ssig --<cr>Adam Garren<cr>me@adamgarren.net
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height = 5
-
-let g:syntastic_cpp_check_header = 1
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-
-nnoremap <leader>sr <esc>:SyntasticReset<cr>
-
-" disable syntastic for html
-let syntastic_mode_map = { 'passive_filetypes': ['html'] }
-
-let g:syntastic_cucumber_cucumber_args="--profile syntastic"
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
-      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive',
-      \   'filename': 'LightlineFilename',
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \   'fileencoding': 'LightlineFileencoding',
-      \   'mode': 'LightlineMode',
-      \   'ctrlpmark': 'CtrlPMark',
-      \ },
-      \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
-      \ },
-      \ 'component_type': {
-      \   'syntastic': 'error',
-      \ },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
-
-function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? 'RO' : ''
-endfunction
-
-function! LightlineFilename()
-  let fname = expand('%:p:h:t') . '/' . expand('%:t')
-  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
-
-function! LightlineFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let branch = fugitive#head()
-      return branch !=# '' ? mark.branch : ''
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
-function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
-endfunction
-
-function! LightlineMode()
-  let fname = expand('%:t')
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
-  else
-    return ''
-  endif
-endfunction
-
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-  \ }
-
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-  let g:lightline.ctrlp_regex = a:regex
-  let g:lightline.ctrlp_prev = a:prev
-  let g:lightline.ctrlp_item = a:item
-  let g:lightline.ctrlp_next = a:next
-  return lightline#statusline(0)
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
-  return lightline#statusline(0)
-endfunction
-
-augroup AutoSyntastic
-  autocmd!
-  autocmd BufWritePost *.c,*.cpp call s:syntastic()
-augroup END
-
-function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
-endfunction
-
-"let g:unite_force_overwrite_statusline = 0
-"let g:vimfiler_force_overwrite_statusline = 0
-"let g:vimshell_force_overwrite_statusline = 0
-
-"if has('statusline')
-"  set laststatus=2
-"  " Broken down into easily includeable segments
-"  set statusline=%<%f\    " Filename
-"  set statusline+=%w%h%m%r " Options
-"  set statusline+=%{fugitive#statusline()} "  Git Hotness
-"  set statusline+=\ [%{&ff}/%Y]            " filetype
-"  set statusline+=\ [%{getcwd()}]          " current dir
-"  set statusline+=%#warningmsg#
-"  set statusline+=%{SyntasticStatuslineFlag()}
-"  set statusline+=%*
-"  let g:syntastic_enable_signs=1
-"  set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-"endif
+" https://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-nnoremap <c-p> :FZF<cr>
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+nnoremap <C-p> :Files<CR>
+nnoremap <C-e> :Buffers<CR>
 
 let g:fzf_action = {
+  \ 'ctrl-e': 'edit',
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
@@ -438,3 +298,11 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Go-related improvements
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)

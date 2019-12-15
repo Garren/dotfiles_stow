@@ -1,9 +1,8 @@
 #!/bin/bash
-if [[ -f ~/.bashrc ]] ; then
-    source ~/.bashrc
-fi
+[ -f ~/.bash/env ] && source ~/.bash/env
+[ -f ~/.bash/config ] && source ~/.bash/config
+[ -f ~/.bash/aliases ] && source ~/.bash/aliases
 
-if [[ -s ~/.profile ]] ; then 
-    source ~/.profile
-fi
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 
