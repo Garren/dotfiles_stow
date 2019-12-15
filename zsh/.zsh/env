@@ -21,6 +21,29 @@ if which go >/dev/null; then
   export PATH=$PATH:$GOPATH/bin
 fi
 
+if which nvim >/dev/null; then
+  export VIMCONFIG=~/.config/nvim
+  export VIMDATA=~/.config/share/nvim
+  export VISUAL=nvim
+  # nvr support
+  if [ -d "$HOME/Library/Python/3.7/bin" ]; then
+    export PATH=$PATH:"$HOME/Library/Python/3.7/bin"
+  fi
+fi
+
+if which fzf >/dev/null; then
+  # tell fzf to filter files using .gitignore
+  # e.g., skip .node_modules, etc.
+  if which rg >/dev/null; then
+    # use ripgrep if it's installed
+    export FZF_DEFAULT_COMMAND='rg --files'
+  else
+    # default to git (might skip files if they're not
+    # in the index
+    export FZF_DEFAULT_COMMAND='git ls-files'
+  fi
+fi
+
 # NODE
 if [ -d $HOME/.node_packages ]; then
   export NODE_PATH=$HOME/.node_packages:$NODE_PATH
