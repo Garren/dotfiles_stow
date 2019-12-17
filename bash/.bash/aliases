@@ -18,7 +18,7 @@ markdown () {
 }
 
 function t {
-  cd $(mktemp -d /tmp/$1.XXXX)
+  pushd $(mktemp -d /tmp/$1.XXXX)
 }
 
 alias go_c="gcc -xc -std=c99 '-' $go_libs $go_flags"
