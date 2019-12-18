@@ -82,6 +82,10 @@ set showmatch
 " bold both parens but only highlight the one under the cursor
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta 
 
+" highlight trailing whitespace in red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
 " number lines relative to current line
 " but give real current line number
 set number
