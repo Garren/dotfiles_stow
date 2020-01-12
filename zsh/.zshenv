@@ -51,12 +51,17 @@ if which go >/dev/null; then
 fi
 
 # NODE
-if [ -d $HOME/.node_packages ]; then
-  export NODE_PATH=$HOME/.node_packages:$NODE_PATH
-  export PATH=$HOME/.node_packages/bin:$PATH
-else
-  export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
-  export PATH=/usr/local/lib/node_modules/bin:$PATH
+if which node >/dev/null && which npm >/dev/null; then
+  if [ -d $HOME/.node_packages ]; then
+    export NPM_PACKAGES=$HOME/.node_packages
+    npm config set prefix $NPM_PACKAGES
+
+    export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
+    export PATH=$NPM_PACKAGES/bin:$PATH
+  else
+    export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
+    export PATH=/usr/local/lib/node_modules/bin:$PATH
+  fi
 fi
 
 # RUBY
