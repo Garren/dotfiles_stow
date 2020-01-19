@@ -31,7 +31,7 @@ else
   export VIMDATA=~/.vim
 fi
 
-# GO 
+# GO
 if which go >/dev/null; then
   # Set the path to the compiler and tooling. Not necessary anymore, but
   # still used in older documentation
@@ -40,7 +40,7 @@ if which go >/dev/null; then
     export GOROOT="$(brew --prefix golang)/libexec"
   fi
 
-  # Set the root path of a single go workspace 
+  # Set the root path of a single go workspace
   # https://golang.org/doc/code.html#Workspaces
   export GOPATH=$HOME/go
   # export GOPATH=$HOME/.go
@@ -66,7 +66,7 @@ fi
 
 # RUBY
 if which ruby >/dev/null && which gem >/dev/null; then
-  if [ ! -f ~/.ruby-version ]; then 
+  if [ ! -f ~/.ruby-version ]; then
     export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
   fi
 fi
@@ -85,18 +85,18 @@ if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-if which fzf>/dev/null; then 
+if which fzf>/dev/null; then
 
   if which rg>/dev/null; then
-    FZF_DEFAULT_COMMAND='rg --files' 
-  elif which fd>/dev/null; then 
+    FZF_DEFAULT_COMMAND='rg --files'
+  elif which fd>/dev/null; then
     FZF_DEFAULT_COMMAND="fd --exclude={.git,.idea,.sass-cache,.node_modules,build,log,.DS_Store} --type f"
   else
     FZF_DEFAULT_COMMAND='git ls-files'
   fi
 
   export FZF_DEFAULT_COMMAND
-  export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500"
+  export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 fi
 
 export ESHELL=/bin/zsh
