@@ -1,6 +1,12 @@
 #!/bin/zsh
 export EDITOR="vim"
 
+# OSX locate doesn't play well with emacs/helm. Use locate
+# from gnu findutils instead if it exists
+if [ -d "/usr/local/opt/findutils/libexec/gnubin" ]; then
+  export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+fi
+
 # Set PATH
 export PATH=$PATH:$HOME/bin
 
