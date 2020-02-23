@@ -41,7 +41,7 @@ if which sml >/dev/null && which brew > /dev/null; then
   export PATH=/usr/local/smlnj/bin:"$PATH"
 fi
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=$(/usr/libexec/java_home -v 13.0.1)
 export PATH=$PATH:${JAVA_HOME}/bin
 
 # RUST
