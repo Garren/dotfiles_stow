@@ -38,7 +38,7 @@ fi
 
 # SML
 if which sml >/dev/null && which brew > /dev/null; then
-  export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
+  export PATH=/usr/local/smlnj/bin:"$PATH"
 fi
 
 export JAVA_HOME=$(/usr/libexec/java_home)
