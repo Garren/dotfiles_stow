@@ -12,6 +12,13 @@ endif
 
 set encoding=UTF-8
 
+" verify python3 is loaded:
+" :echo has("python3")
+" install whatever this thing is
+" pip3 install --user pynvim
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 call plug#begin('~/.config/nvim/plugged')
 "File Search:
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -25,33 +32,22 @@ Plug 'ctrlpvim/ctrlp.vim'
 "Golang:
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-go'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
 "Snippets:
-Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter' not vim-go friendly
 "Var:
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
-"Todo
-" Plug 'pangloss/vim-javascript'
-" Plug 'elixir-editors/vim-elixir'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-
-" Plug 'mustache/vim-mustache-handlebars'
-" Plug 'elmcast/elm-vim'
-" Plug 'posva/vim-vue'
 call plug#end()
+
+let g:deoplete#enable_at_startup = 1
 
 "COPY/PASTE:
 "-----------
@@ -61,6 +57,11 @@ call plug#end()
 "NUMBERING:
 "----------
 :set number
+
+"VARIOUS:
+"--------
+set nohlsearch
+set nowrap
 
 "INDENTATION:
 "------------
@@ -76,23 +77,23 @@ colorscheme molokai
 "------------
 let g:go_fmt_command = "goimports"
 
-"AUTOCOMPLETE:
-"-------------
-augroup ncm2
-  au!
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  set completeopt=noinsert,menuone,noselect
-  au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-  au User Ncm2PopupClose set completeopt=menuone
-augroup END
-"Press Enter to select item in autocomplete popup
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
+""AUTOCOMPLETE:
+""-------------
+"augroup ncm2
+"  au!
+"  autocmd BufEnter * call ncm2#enable_for_buffer()
+"  set completeopt=noinsert,menuone,noselect
+"  au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+"  au User Ncm2PopupClose set completeopt=menuone
+"augroup END
+""Press Enter to select item in autocomplete popup
+"inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
 "Cycle through completion entries with tab/shift+tab
-inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
-inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
-"Allow getting out of pop with Down/Up arrow keys
-inoremap <expr> <down> pumvisible() ? "\<C-E>" : "\<down>"
-inoremap <expr> <up> pumvisible() ? "\<C-E>" : "\<up>"
+"inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
+"inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
+""Allow getting out of pop with Down/Up arrow keys
+"inoremap <expr> <down> pumvisible() ? "\<C-E>" : "\<down>"
+"inoremap <expr> <up> pumvisible() ? "\<C-E>" : "\<up>"
 
 "SNIPPETS:
 "---------
@@ -193,7 +194,7 @@ set ignorecase
 set smartcase
 
 " highlight matches
-set hlsearch
+"set hlsearch
 
 " search as characters are entered 
 set incsearch
