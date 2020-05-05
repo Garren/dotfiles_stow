@@ -1,6 +1,6 @@
 [user]
 	name = Adam Garren
-	email = garren@users.noreply.github.com
+	email = agarren@risclarity.com 
 [alias]
 	co = checkout
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short

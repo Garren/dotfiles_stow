@@ -39,7 +39,6 @@ Plug 'elmcast/elm-vim'
 Plug 'posva/vim-vue'
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-
 call plug#end()
 
 filetype plugin indent on
@@ -303,6 +302,11 @@ let g:fzf_colors =
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
+
+nnoremap <leader>gdd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>grr :YcmCompleter GoToReference<CR>
+nnoremap <leader>ycm :YcmCompleter RestartServer<CR>
+
 
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)

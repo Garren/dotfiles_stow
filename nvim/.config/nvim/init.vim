@@ -10,7 +10,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 
 endif
 
-set encoding=utf8
+set encoding=UTF-8
 
 call plug#begin('~/.config/nvim/plugged')
 "File Search:
@@ -40,6 +40,7 @@ Plug 'tpope/vim-fugitive'
 "Var:
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons'
 "Todo
 " Plug 'pangloss/vim-javascript'
 " Plug 'elixir-editors/vim-elixir'
@@ -303,7 +304,7 @@ nnoremap <Leader>bd :bd<CR>
 inoremap fd <esc>
 
 " viw   : hightlight current word
-" <esc> : leave visual 
+" <esc> : leave visual
 " a"    : append a quote after word
 " <esc> : leave insert
 " hbi"  : right one, beginning of word, insert quote
@@ -316,3 +317,6 @@ if has("autocmd")
 autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab
 endif
 
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+set clipboard^=unnamed " use the system clipboard
+set list listchars=tab:≫∙,trail:∙,nbsp:∙ " display extra white space
