@@ -29,13 +29,19 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
-"Golang:
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+"Golang:
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'deoplete-plugins/deoplete-go', { 'build': {'unix': 'make'}}
+"Javascript:
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+Plug 'carlitux/deoplete-ternjs'
 "Snippets:
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -48,6 +54,34 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+call deoplete#custom#option('enable_smart_case', 1)
+"let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option('enable_camel_case', 1)
+"let g:deoplete#enable_camel_case = 1
+call deoplete#custom#option('enable_refresh_always', 1)
+"let g:deoplete#enable_refresh_always = 1
+call deoplete#custom#option('enable_abbr_width', 0)
+"let g:deoplete#max_abbr_width = 0
+call deoplete#custom#option('enable_menu_width', 0)
+"let g:deoplete#max_menu_width = 0
+"let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
+let g:tern_request_timeout = 1
+let g:tern_request_timeout = 6000
+let g:tern#command = ["tern"]
+let g:tern#arguments = [" — persistent"]
+
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" config project root markers.
+let g:gutentags_project_root = ['.root']
+" generate datebases in my cache directory, prevent gtags files polluting my project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+set statusline+=%{gutentags#statusline()}
 
 "COPY/PASTE:
 "-----------
