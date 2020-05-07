@@ -22,3 +22,4 @@ alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 
 
 alias doco='docker-compose'
 alias vim='nvim'
+alias cat='bat'

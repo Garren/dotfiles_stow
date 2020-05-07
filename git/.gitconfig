@@ -4,6 +4,9 @@
 [alias]
 	co = checkout
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	hide = update-index --skip-worktree
+	unhide = update-index --no-skip-worktree
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 [core]
 	editor = vim
 [color]
@@ -19,3 +22,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[log]
+	date = relative

@@ -4,3 +4,4 @@ vim/.vim/view/
 .DS_Store
 nvim/.config/nvim/ftplugin/
 nvim/.config/nvim/plugged/
+nvim/.config/nvim/autoload/*.old
