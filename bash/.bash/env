@@ -55,25 +55,11 @@ else
   export PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
-# gem --user-install is screwed up and this doesn't help
-#if which ruby >/dev/null && which gem >/dev/null; then
-#  export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
-#fi
-
-if which sml >/dev/null && which brew > /dev/null; then
-  export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
-fi
-
 if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-#if hash java 2>/dev/null && [ -x /usr/libexec/java_home ]; then
-#  # For Android (java 9 not supported)
-#  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-#  #export JAVA_HOME=$(/usr/libexec/java_home)
-#fi 
-
+export JAVA_HOME='/usr/lib/jvm/java-14-openjdk-amd64/bin'
 
 if [ -x /usr/bin/dircolors ]; then
    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"

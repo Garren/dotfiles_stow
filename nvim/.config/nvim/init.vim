@@ -61,6 +61,10 @@ call plug#end()
 "----------
 :set number
 
+"Wrapping:
+""--------
+:set nowrap
+
 "INDENTATION:
 "------------
 "Highlights code for multiple indents without reselecting
@@ -148,7 +152,9 @@ let os=substitute(system('uname'), '\n', '', '')
 if os == 'Linux'
   if &term =~ '^screen'
     " tmux knows the extended mouse mode
-    set ttymouse=xterm2
+    if !has('nvim')
+      set ttymouse=xterm2
+    endif
   endif
 endif
 

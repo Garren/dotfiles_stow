@@ -2,3 +2,6 @@ vim/.vim/plugged
 vim/.vim/.netrwhist
 vim/.vim/view/
 .DS_Store
+nvim/.config/nvim/ftplugin
+nvim/.config/nvim/jplugged
+nvim/.config/nvim/plugged
