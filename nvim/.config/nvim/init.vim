@@ -55,15 +55,21 @@ call plug#end()
 "COPY/PASTE:
 "-----------
 "Increases the memory limit from 50 lines to 1000 lines
-:set viminfo='100,<1000,s10,h
+set viminfo='100,<1000,s10,h
 
 "NUMBERING:
 "----------
-:set number
+set number
 
 "Wrapping:
 ""--------
-:set nowrap
+set nowrap
+
+set nohlsearch
+
+"SYSTEM CLIPBOARD - always
+"---------
+set clipboard+=unnamedplus
 
 "INDENTATION:
 "------------

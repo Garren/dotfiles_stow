@@ -56,6 +56,7 @@ This function should only modify configuration layer settings."
          godoc-at-point-function 'godoc-gogetdoc)
 
      (javascript :variables
+                 javascript-backend 'lsp
                  javascript-disable-tern-port t
                  javascript-import-tool 'import-js
                  javascript-repl `nodejs
