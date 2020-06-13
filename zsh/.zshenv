@@ -10,8 +10,13 @@ export PATH=$PATH:$HOME/bin
 if [ -d "/usr/local/sbin" ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
+
 if [ -d "/usr/local/bin" ]; then
   export PATH=/usr/local/bin:$PATH
+fi
+
+if [ -d "/usr/local/protobuf/bin" ]; then
+  export PATH="$PATH:/usr/local/protobuf/bin"
 fi
 
 # Elixir/Erlang
@@ -46,9 +51,12 @@ if which go >/dev/null; then
   # export GOPATH=$HOME/.go
 
   # assume recent version of go
-  export GO111MODULE=auto
+  #export GO111MODULE=auto
   export PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
+
+# practical microservices
+export PATH="/usr/local/opt/node@12/bin:$PATH"
 
 # NODE
 if which node >/dev/null && which npm >/dev/null; then
@@ -88,7 +96,7 @@ fi
 if which fzf>/dev/null; then
 
   if which rg>/dev/null; then
-    FZF_DEFAULT_COMMAND='rg --files'
+    FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-ignore-vcs -g"!{node_modules,.git,.DS_Store}"'
   elif which fd>/dev/null; then
     FZF_DEFAULT_COMMAND="fd --exclude={.git,.idea,.sass-cache,.node_modules,build,log,.DS_Store} --type f"
   else
