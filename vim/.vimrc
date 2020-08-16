@@ -37,6 +37,8 @@ syntax on
 "filetype off
 "filetype plugin indent on
 
+let &path.="/usr/local/include,"
+
 set modelines=0
 
 " visual spaces per tab
@@ -444,3 +446,11 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 set rtp+=/usr/local/opt/fzf
+
+let g:rg_command = '
+  \ rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --color "always"
+  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf}"
+  \ -g "!*.{min.js,swp,o,zip}" 
+  \ -g "!{.git,node_modules,vendor}/*" '
+
+command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)

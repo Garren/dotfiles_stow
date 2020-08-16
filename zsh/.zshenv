@@ -15,7 +15,7 @@ if [ -d "/usr/local/sbin" ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
 
-# GO 
+# GO
 if which go >/dev/null; then
   export GO111MODULE=on
   export GOPATH=$HOME/go
@@ -46,6 +46,6 @@ export PATH=$PATH:${JAVA_HOME}/bin
 
 # RUST
 if which cargo>/dev/null; then
-  PATH="$HOME/.cargo/bin:$PATH"
+  export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
