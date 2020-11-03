@@ -4,11 +4,14 @@
 [alias]
 	co = checkout
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+        hidden= ! git ls-files -v . | grep ^S
 	hide = update-index --skip-worktree
 	unhide = update-index --no-skip-worktree
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+        untracked= ls-files -o --exclude-standard
 [core]
 	editor = vim
+	excludesfile = /Users/adamgarren/.gitignore_global
 [color]
 	branch = auto
 	diff = auto
@@ -24,3 +27,5 @@
 	required = true
 [log]
 	date = relative
+[pull]
+	rebase = true

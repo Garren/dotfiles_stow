@@ -56,12 +56,24 @@ call plug#end()
 "--------
 set nohlsearch
 set nowrap
+set autoread
 
 "INDENTATION:
 "------------
 "Highlights code for multiple indents without reselecting
 vnoremap < <gv
 vnoremap > >gv
+
+" WHITESPACE HIGHTLIGHT
+"-----
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
 "COLOR:
 "------
@@ -241,6 +253,12 @@ let g:NERDTreeDirArrowCollapsible = "\u00a0"
 let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
 highlight! link NERDTreeFlags NERDTreeDir
 
+"SNIPPETS:
+"---------
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
 "SHORTCUTS:
 "----------
 "Open file at same line last closed
@@ -323,7 +341,7 @@ set relativenumber
 
 " keep 3 lines above or below the cursor 
 " when near the top or bottom of the screen
-set scrolloff=3
+set scrolloff=20
 
 " show the mode (insert, normal, visual) in the 
 " last line
@@ -415,6 +433,7 @@ nnoremap <Leader>bp :bp<CR>
 nnoremap <Leader>bd :bd<CR>
 
 inoremap fd <esc>
+vnoremap fd <esc>
 
 " viw   : hightlight current word
 " <esc> : leave visual
@@ -429,6 +448,7 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 if has("autocmd")
 autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType javascript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 endif
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'

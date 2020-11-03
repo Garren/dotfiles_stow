@@ -3,6 +3,8 @@
 export EDITOR="vim"
 export VISUAL="vim"
 
+export SSLKEYLOGFILE=~/.ssl-key.log
+
 # Set PATH
 export PATH=$PATH:$HOME/bin
 
