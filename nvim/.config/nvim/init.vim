@@ -41,11 +41,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
 "Todo
-" Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 " Plug 'elixir-editors/vim-elixir'
-" Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim'
 " Plug 'ianks/vim-tsx'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+ "Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
 " Plug 'mustache/vim-mustache-handlebars'
 " Plug 'elmcast/elm-vim'
@@ -326,5 +326,7 @@ nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 
 if has("autocmd")
 autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
 endif
 

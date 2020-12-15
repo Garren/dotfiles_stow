@@ -15,30 +15,25 @@ if [ -d "/usr/local/bin" ]; then
   export PATH=/usr/local/bin:$PATH
 fi
 
+# python pip
+if [ -d "$HOME/.local/bin" ]; then
+  export PATH=$HOME/.local/bin:$PATH
+fi
+
 if [ "$HOSTNAME" = sdf ]; then 
   export MAIL=/mail/${LOGNAME:?}
   export TERM=vt100
   stty erase '^?' echoe
 fi
 
-export LC_TYPE=en_US.UTF-8
+export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 
 export go_libs="-lm"
 export go_flags="-g -Wall -O3"
 
 # Enable shell history for elixir & erlang
 export ERL_AFLAGS="-kernel shell_history enabled"
-
-# Firefox and Chrome write values used to generate session keys to flat
-# file. Used for wireshark analysis of encrypted traffic.
-if [ -f "~/Documents/sslkey.log" ]; then 
-  export SSLKEYLOGFILE=~/Documents/sslkey.log
-fi
-
-# access vmware fusion command utilities.
-if [ -d "/Applications/VMWare Fusion.app/Contents/Library" ]; then
-  export PATH=$PATH:"/Applications/VMWare Fusion.app/Contents/Library"
-fi
 
 ## Set gopath
 if which go >/dev/null; then
@@ -55,11 +50,15 @@ else
   export PATH=/usr/local/lib/node_modules/bin:$PATH
 fi
 
-if which cargo>/dev/null; then
-  PATH="$HOME/.cargo/bin:$PATH"
+if [ -d $HOME/.cabal ]; then
+  export PATH=$HOME/.cabal/bin:$PATH
 fi
 
 export JAVA_HOME='/usr/lib/jvm/java-14-openjdk-amd64/bin'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.cargo/env ] && source ~/.cargo/env
+
 
 if [ -x /usr/bin/dircolors ]; then
    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -69,6 +68,7 @@ else
 # sdf .profile
 # export LSCOLORS=Gxfxcxdxbxegedabagacad
 fi
+
 
 export COLOR_RED="\[\033[0;31m\]"
 export COLOR_LIGHTRED="\[\033[1;31m\]"
@@ -85,8 +85,3 @@ export COLOR_LIGHTCYAN="\[\033[1;36m\]"
 export COLOR_WHITE="\[\033[1;37m\]"
 
 PS1="$COLOR_LIGHTCYAN[\h]$COLOR_LIGHTRED\w$COLOR_LIGHTPURPLE:\j$COLOR_LIGHTYELLOW \$(parse_git_branch)$COLOR_GREEN\\n$ "
-
-
-if which direnv>/dev/null; then
-  eval "$(direnv hook bash)"
-fi
