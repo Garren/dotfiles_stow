@@ -41,3 +41,6 @@ PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(par
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+
+# added by travis gem
+[ ! -s /Users/esak/.travis/travis.sh ] || source /Users/esak/.travis/travis.sh

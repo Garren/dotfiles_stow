@@ -5,3 +5,6 @@
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+
+# added by travis gem
+[ ! -s /Users/esak/.travis/travis.sh ] || source /Users/esak/.travis/travis.sh

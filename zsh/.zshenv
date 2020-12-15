@@ -36,6 +36,10 @@ if which ruby >/dev/null && which gem >/dev/null; then
   export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
+if [ -d $HOME/Library/Python/3.9/bin ]; then
+  export PATH=$PATH:$HOME/Library/Python/3.9/bin
+fi
+
 # SML
 if which sml >/dev/null && which brew > /dev/null; then
   export PATH=/usr/local/smlnj/bin:"$PATH"

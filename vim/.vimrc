@@ -22,7 +22,7 @@ Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'junegunn/vader.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'posva/vim-vue'
+Plug 'jparise/vim-graphql'
 
 call plug#end()
 
@@ -100,7 +100,7 @@ set encoding=utf-8
 
 " keep 3 lines above or below the cursor 
 " when near the top or bottom of the screen
-set scrolloff=3
+set scrolloff=999
 
 " use the indent for the last line for the 
 " next line
