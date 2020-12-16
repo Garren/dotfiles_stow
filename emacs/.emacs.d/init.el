@@ -107,6 +107,8 @@
 
 ;;; Load wheatgrass as the default theme if one is not loaded already
 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
 (load-theme 'zenburn t)
 (set-face-attribute 'default nil :height 140)
 
@@ -173,3 +175,8 @@
 
 ;; configure helm
 (helm-mode 1)
+
+;; configure osx
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier 'control)
+(global-set-key (kbd "M-`") 'other-frame)
