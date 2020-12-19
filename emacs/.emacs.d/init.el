@@ -69,17 +69,55 @@
 (global-set-key [mouse-3] 'mouse-popup-menubar-stuff)          ; Gives right-click a context menu
 (global-set-key (kbd "C->") 'indent-rigidly-right-to-tab-stop) ; Indent selection by one tab length
 (global-set-key (kbd "C-<") 'indent-rigidly-left-to-tab-stop)  ; De-indent selection by one tab length
+
 (global-set-key (kbd "M-DEL") 'sanemacs/backward-kill-word)    ; Kill word without copying it to your clipboard
 (global-set-key (kbd "C-DEL") 'sanemacs/backward-kill-word)    ; Kill word without copying it to your clipboard
+
 (global-set-key (kbd "M-j")
 		(lambda ()
 		  (interactive)
 		  (join-line -1)))                             ; Join lines
+
+(defun copy-line (arg)
+  "Copy lines (as many as prefix argument) in the kill ring.
+      Ease of use features:
+      - Move to start of next line.
+      - Appends the copy on sequential calls.
+      - Use newline as last char even on the last line of the buffer.
+      - If region is active, copy its lines."
+  (interactive "p")
+  (let ((beg (line-beginning-position))
+        (end (line-end-position arg)))
+    (when mark-active
+      (if (> (point) (mark))
+          (setq beg (save-excursion (goto-char (mark)) (line-beginning-position)))
+        (setq end (save-excursion (goto-char (mark)) (line-end-position)))))
+    (if (eq last-command 'copy-line)
+        (kill-append (buffer-substring beg end) (< end beg))
+      (kill-ring-save beg end)))
+  (kill-append "\n" nil)
+  (beginning-of-line (or (and arg (1+ arg)) 2))
+  (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
+
+(global-set-key (kbd "C-c C-k") 'copy-line)
+
 (global-set-key (kbd "M-o") 'other-window)                     ; Move between windows ( C-x o alias )
 (global-set-key (kbd "M-i") 'imenu)
 
-(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-x") 'helm-M-x)                         ; helm for M-x
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
+
+;; Invoke M-x without alt
+(global-set-key (kbd "C-x C-m") 'helm-M-x)
+(global-set-key (kbd "C-c C-m") 'helm-M-x)
+
+;; Prefer backward-kill-word over Backspace
+(global-set-key (kbd "C-w") 'backward-kill-word)
+;; (global-set-key (kbd "C-x C-k") 'kill-region)
+;; (global-set-key (kbd "C-c C-K") 'kill-region)
+
+(global-set-key (kbd "M-`") 'other-frame)
+
 
 ;;; Offload the custom-set-variables to a separate file
 ;;; This keeps your init.el neater and you have the option
@@ -103,7 +141,7 @@
   backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 
 ;;; Lockfiles unfortunately cause more pain than benefit
- (setq create-lockfiles nil)
+(setq create-lockfiles nil)
 
 ;;; Load wheatgrass as the default theme if one is not loaded already
 
@@ -179,4 +217,3 @@
 ;; configure osx
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'control)
-(global-set-key (kbd "M-`") 'other-frame)
