@@ -22,15 +22,6 @@ if [ -n "$ZSH_VERSION" ]; then
   fi
 fi
 
-if which direnv>/dev/null; then
-  eval "$(direnv hook zsh)"
-fi
-
-## Python...
-#if command -v pyenv 1>/dev/null 2>&1; then
-#  eval "$(pyenv init -)"
-#fi
-
 ## Prompt
 function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -48,5 +39,3 @@ PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(par
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.cargo/env ] && source ~/.cargo/env

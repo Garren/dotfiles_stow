@@ -56,7 +56,7 @@ if which go >/dev/null; then
 fi
 
 # practical microservices
-export PATH="/usr/local/opt/node@12/bin:$PATH"
+#export PATH="/usr/local/opt/node@12/bin:$PATH"
 
 # NODE
 if which node >/dev/null && which npm >/dev/null; then
@@ -73,11 +73,11 @@ if which node >/dev/null && which npm >/dev/null; then
 fi
 
 # RUBY
-if which ruby >/dev/null && which gem >/dev/null; then
-  if [ ! -f ~/.ruby-version ]; then
-    export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
-  fi
-fi
+#if which ruby >/dev/null && which gem >/dev/null; then
+#  if [ ! -f ~/.ruby-version ]; then
+#    export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
+#  fi
+#fi
 
 # SML
 if which sml >/dev/null && which brew > /dev/null; then
@@ -92,6 +92,7 @@ export PATH=$PATH:${JAVA_HOME}/bin
 if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
+[ -f ~/.cargo/env ] && source ~/.cargo/env
 
 if which fzf>/dev/null; then
 
@@ -106,6 +107,7 @@ if which fzf>/dev/null; then
   export FZF_DEFAULT_COMMAND
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export ESHELL=/bin/zsh
 
