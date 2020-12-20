@@ -27,9 +27,9 @@ if which direnv>/dev/null; then
 fi
 
 ## Python...
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+#if command -v pyenv 1>/dev/null 2>&1; then
+#  eval "$(pyenv init -)"
+#fi
 
 ## Prompt
 function parse_git_branch {
