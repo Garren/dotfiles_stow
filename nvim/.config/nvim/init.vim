@@ -31,7 +31,10 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
 "Autocomplete:
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+"Navigation:
+Plug 'preservim/tagbar'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
 "Snippets:
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -454,3 +457,6 @@ endif
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 set clipboard^=unnamed " use the system clipboard
 set list listchars=eol:¬,tab:≫∙,trail:~,nbsp:∙,extends:>,precedes:< ",space:␣ " display extra white space
+
+"Navigation
+nmap <F8> :TagbarToggle<CR>
