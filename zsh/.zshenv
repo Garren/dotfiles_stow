@@ -2,6 +2,11 @@
 
 export EDITOR="vim"
 export VISUAL="vim"
+export ESHELL=/bin/zsh
+
+# Elixir/Erlang
+# Enable shell history for elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Set PATH
 export PATH=$PATH:$HOME/bin
@@ -18,10 +23,6 @@ fi
 if [ -d "/usr/local/protobuf/bin" ]; then
   export PATH="$PATH:/usr/local/protobuf/bin"
 fi
-
-# Elixir/Erlang
-# Enable shell history for elixir
-export ERL_AFLAGS="-kernel shell_history enabled"
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
@@ -55,9 +56,6 @@ if which go >/dev/null; then
   export PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
 
-# practical microservices
-#export PATH="/usr/local/opt/node@12/bin:$PATH"
-
 # NODE
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
@@ -72,17 +70,9 @@ if which node >/dev/null && which npm >/dev/null; then
   fi
 fi
 
-# RUBY
-#if which ruby >/dev/null && which gem >/dev/null; then
-#  if [ ! -f ~/.ruby-version ]; then
-#    export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
-#  fi
-#fi
-
 # SML
 if which sml >/dev/null && which brew > /dev/null; then
   export PATH=/usr/local/smlnj/bin:"$PATH"
-  #export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
 fi
 
 export JAVA_HOME=$(/usr/libexec/java_home)
@@ -92,7 +82,13 @@ export PATH=$PATH:${JAVA_HOME}/bin
 if which cargo>/dev/null; then
   PATH="$HOME/.cargo/bin:$PATH"
 fi
+
+if [ -d $HOME/.roswell ]; then
+  export PATH="$HOME/.roswell/bin:$PATH"
+fi
+
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if which fzf>/dev/null; then
 
@@ -107,10 +103,5 @@ if which fzf>/dev/null; then
   export FZF_DEFAULT_COMMAND
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 fi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export ESHELL=/bin/zsh
-
-if [ -f ~/.secrets/env ]; then
-  source ~/.secrets/env
-fi
+[ -f ~/.secrets/env ]; source ~/.secrets/env
