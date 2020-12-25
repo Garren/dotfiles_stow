@@ -13,8 +13,8 @@
                                (setq gc-cons-threshold 800000)))
 
 ;;; Disable menu-bar, tool-bar, and scroll-bar.
-(if (fboundp 'menu-bar-mode)
-    (menu-bar-mode -1))
+ ;; (if (fboundp 'menu-bar-mode)
+ ;;    (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode)
     (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode)
@@ -29,6 +29,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (unless package--initialized (package-initialize))
 
 ;;; Setup use-package
@@ -113,32 +114,36 @@
 
 ;; Prefer backward-kill-word over Backspace
 (global-set-key (kbd "C-w") 'backward-kill-word)
-;; (global-set-key (kbd "C-x C-k") 'kill-region)
-;; (global-set-key (kbd "C-c C-K") 'kill-region)
+(global-set-key (kbd "C-x C-k") 'kill-region)
+(global-set-key (kbd "C-c C-K") 'kill-region)
 
 (global-set-key (kbd "M-`") 'other-frame)
 
+;; org mode keys
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 
 ;;; Offload the custom-set-variables to a separate file
 ;;; This keeps your init.el neater and you have the option
 ;;; to gitignore your custom.el if you see fit.
- (setq custom-file "~/.emacs.d/custom.el")
- (unless (file-exists-p custom-file)
-   (write-region "" nil custom-file))
+(setq custom-file "~/.emacs.d/custom.el")
+(unless (file-exists-p custom-file)
+  (write-region "" nil custom-file))
 ;;; Load custom file. Don't hide errors. Hide success message
- (load custom-file nil t)
+(load custom-file nil t)
 
 ;;; Put Emacs auto-save and backup files to /tmp/ or C:/Temp/
- (defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
- (setq
-  backup-by-copying t			; Avoid symlinks
-  delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t
-  auto-save-list-file-prefix emacs-tmp-dir
-  auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t)) ; Change autosave dir to tmp
-  backup-directory-alist `((".*" . ,emacs-tmp-dir)))
+(defconst emacs-tmp-dir (expand-file-name (format "emacs%d" (user-uid)) temporary-file-directory))
+(setq
+ backup-by-copying t			; Avoid symlinks
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ version-control t
+ auto-save-list-file-prefix emacs-tmp-dir
+ auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t)) ; Change autosave dir to tmp
+ backup-directory-alist `((".*" . ,emacs-tmp-dir)))
 
 ;;; Lockfiles unfortunately cause more pain than benefit
 (setq create-lockfiles nil)
@@ -165,6 +170,18 @@
 (use-package helm)
 (use-package helm-slime)
 (use-package whole-line-or-region) ;; modify C-w so it kills a line the point is on if no active region
+(use-package better-defaults)
+(use-package exec-path-from-shell)
+(use-package flycheck)
+(use-package projectile)
+(use-package org)
+
+;; Python related
+(use-package elpy)
+(use-package py-autopep8);; autopep8 formatting checker
+(use-package blacken)    ;; formatting
+
+
 
 ;; M-x describe-personal-keybindings
 
@@ -217,3 +234,19 @@
 ;; configure osx
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'control)
+(exec-path-from-shell-initialize)
+
+;; Elpy configuration
+(elpy-enable 1)
+;; enable flycheck
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; enable autopep8
+(require 'py-autopep8)
+(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; Projectile configuration
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
