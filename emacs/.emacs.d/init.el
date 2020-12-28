@@ -162,7 +162,16 @@
 (use-package slime)
 (use-package paredit)
 (use-package rainbow-delimiters)
-(use-package geiser)
+
+(use-package geiser
+  :after paredit
+  :config
+  ; Add implementations to support
+  (setq geiser-active-implementations '(guile mit)
+        geiser-repl-send-on-return-p nil
+        geiser-default-implementation 'guile)
+  (add-hook 'geiser-repl-mode-hook #'enable-paredit-mode))
+
 (use-package company)
 (use-package slime-company)
 (use-package ace-jump-mode
@@ -175,13 +184,21 @@
 (use-package flycheck)
 (use-package projectile)
 (use-package org)
+(use-package org-bullets
+  :ensure t
+  :init
+  (setq org-bullets-bullet-list
+        '("◉" "◎" "⚫" "○" "►" "◇"))
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
+(setq org-todo-keywords '((sequence "☛ TODO(t)" "|" "✔ DONE(d)")
+                          (sequence "⚑ WAITING(w)" "|")
+                          (sequence "|" "✘ CANCELED(c)")))
 ;; Python related
 (use-package elpy)
 (use-package py-autopep8);; autopep8 formatting checker
 (use-package blacken)    ;; formatting
-
-
 
 ;; M-x describe-personal-keybindings
 
@@ -199,6 +216,7 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook #'geiser-mode)
 (add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
 (defun override-slime-del-key ()
   (define slime-repl-mode-map
@@ -216,12 +234,12 @@
 (slime-setup '(slime-fancy slime-company))
 
 ;; additional geiser config
-(eval-after-load "geiser-impl"
-  '(add-to-list 'geiser-implementations-alist
-                '((dir "/home/agarren/Projects/scheme/mit/") mit)))
-(eval-after-load "geiser-impl"
-  '(add-to-list 'geiser-implementations-alist
-                '((dir "/home/agarren/Projects/scheme/guile/") guile)))
+;; (eval-after-load "geiser-impl"
+;;   '(add-to-list 'geiser-implementations-alist
+;;                 '((dir "/home/agarren/Projects/scheme/mit/") mit)))
+;; (eval-after-load "geiser-impl"
+;;   '(add-to-list 'geiser-implementations-alist
+;;                 '((dir "/home/agarren/Projects/scheme/guile/") guile)))
 
 ;; configure fido
 (ido-mode 1)
@@ -236,8 +254,9 @@
 (setq mac-option-modifier 'control)
 (exec-path-from-shell-initialize)
 
-;; Elpy configuration
-(elpy-enable 1)
+;; Elpy config
+(setq elpy-rpc-python-command "python3")
+
 ;; enable flycheck
 (when (require 'flycheck nil t)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
@@ -250,3 +269,7 @@
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((scheme . t)))
