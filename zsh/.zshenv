@@ -2,23 +2,10 @@
 
 export EDITOR="vim"
 export VISUAL="vim"
+export ESHELL=/bin/zsh
 
 export SSLKEYLOGFILE=~/.ssl-key.log
 
-# Set PATH
-export PATH=$PATH:$HOME/bin
-
-# HOMEBREW
-if [ -d "/usr/local/sbin" ]; then
-  export PATH=/usr/local/sbin:$PATH
-fi
-if [ -d "/usr/local/bin" ]; then
-  export PATH=/usr/local/bin:$PATH
-fi
-
-# Elixir/Erlang
-# Enable shell history for elixir
-export ERL_AFLAGS="-kernel shell_history enabled"
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
@@ -66,26 +53,8 @@ if which node >/dev/null && which npm >/dev/null; then
   fi
 fi
 
-# RUBY
-if which ruby >/dev/null && which gem >/dev/null; then
-  if [ ! -f ~/.ruby-version ]; then
-    export PATH=$PATH:"$(ruby -r rubygems -e 'puts Gem.user_dir')/bin"
-  fi
-fi
-
-# SML
-if which sml >/dev/null && which brew > /dev/null; then
-  export PATH=/usr/local/smlnj/bin:"$PATH"
-  #export PATH=$PATH:"/usr/local/Cellar/smlnj/$(brew list --versions smlnj | tr ' ' '\n' | tail -1)/bin"
-fi
-
 export JAVA_HOME=$(/usr/libexec/java_home)
 export PATH=$PATH:${JAVA_HOME}/bin
-
-# RUST
-if which cargo>/dev/null; then
-  PATH="$HOME/.cargo/bin:$PATH"
-fi
 
 if which fzf>/dev/null; then
 
@@ -101,8 +70,15 @@ if which fzf>/dev/null; then
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 fi
 
-export ESHELL=/bin/zsh
+# Set PATH
+export PATH=$PATH:$HOME/bin
 
-if [ -f ~/.secrets/env ]; then
-  source ~/.secrets/env
-fi
+# HOMEBREW
+[ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
+[ -d "/usr/local/bin" ] && export PATH=/usr/local/bin:$PATH
+
+[ -f ~/.secrets/env ] && source ~/.secrets/env
+[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.cargo/env ] && source ~/.cargo/env

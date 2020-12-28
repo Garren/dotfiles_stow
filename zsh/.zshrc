@@ -14,17 +14,6 @@ bindkey -e
 bindkey "^[[3~"  delete-char
 bindkey "^[3;5~" delete-char
 
-if [ -n "$ZSH_VERSION" ]; then
-  if [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ]; then
-    # OSX - homebrew
-    source /usr/local/opt/chruby/share/chruby/chruby.sh
-    source /usr/local/opt/chruby/share/chruby/auto.sh
-  fi
-fi
-
-if which direnv>/dev/null; then
-  eval "$(direnv hook zsh)"
-fi
 
 ## Prompt
 function parse_git_branch {
@@ -40,8 +29,3 @@ setopt PROMPT_SUBST
 NEWLINE=$'\n'
 PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(parse_git_branch)%f${NEWLINE}$ "
 
-[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.cargo/env ] && source ~/.cargo/env
