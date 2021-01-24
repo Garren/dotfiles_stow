@@ -6,7 +6,7 @@
  '(fido-mode t)
  '(next-screen-context-lines 5)
  '(package-selected-packages
-   '(company slime helm-slime whole-line-or-region helm ace-jump-mode undo-tree use-package zenburn-theme slime-company rainbow-delimiters paredit geiser color-theme-sanityinc-tomorrow))
+   '(org-bullets projectile exec-path-from-shell flycheck blacken py-autopep8 elpy better-defaults company slime helm-slime whole-line-or-region helm ace-jump-mode undo-tree use-package zenburn-theme slime-company rainbow-delimiters paredit geiser color-theme-sanityinc-tomorrow))
  '(slime-company-completion 'fuzzy))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

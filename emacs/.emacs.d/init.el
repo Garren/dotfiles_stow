@@ -7,10 +7,11 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
-
 (add-hook 'after-init-hook #'(lambda ()
                                ;; restore after startup
                                (setq gc-cons-threshold 800000)))
+
+(setq initial-frame-alist '((top . 100) (left . 1200) (width . 120) (height . 80)))
 
 ;;; Disable menu-bar, tool-bar, and scroll-bar.
  ;; (if (fboundp 'menu-bar-mode)
@@ -264,6 +265,9 @@
 ;; enable autopep8
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; Javascript
+(setq js-indent-level 2)
 
 ;; Projectile configuration
 (projectile-mode +1)

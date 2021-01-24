@@ -8,21 +8,14 @@ export ESHELL=/bin/zsh
 # Enable shell history for elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
 
-# Set PATH
-export PATH=$PATH:$HOME/bin
-
-# HOMEBREW
-if [ -d "/usr/local/sbin" ]; then
-  export PATH=/usr/local/sbin:$PATH
-fi
-
-if [ -d "/usr/local/bin" ]; then
-  export PATH=/usr/local/bin:$PATH
-fi
-
-if [ -d "/usr/local/protobuf/bin" ]; then
-  export PATH="$PATH:/usr/local/protobuf/bin"
-fi
+[ -d $HOME/bin ] && PATH="$PATH:$HOME/bin"
+[ -d "/usr/local/sbin" ] && PATH=/usr/local/sbin:$PATH
+[ -d "/usr/local/bin" ] && PATH=/usr/local/bin:$PATH
+[ -d "/usr/local/protobuf/bin" ] && PATH="$PATH:/usr/local/protobuf/bin"
+[ -d $HOME/.cargo/bin ] && PATH="$HOME/.cargo/bin:$PATH"
+[ -d $HOME/.roswell ] && PATH="$HOME/.roswell/bin:$PATH"
+[ -d /usr/local/opt/llvm/bin ] && PATH="$PATH:/usr/local/opt/llvm/bin"
+[ -d /usr/local/smlnj/bin ] && PATH=/usr/local/smlnj/bin:"$PATH"
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
@@ -53,7 +46,7 @@ if which go >/dev/null; then
 
   # assume recent version of go
   #export GO111MODULE=auto
-  export PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
+  PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
 
 # NODE
@@ -63,29 +56,15 @@ if which node >/dev/null && which npm >/dev/null; then
     npm config set prefix $NPM_PACKAGES
 
     export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
-    export PATH=$NPM_PACKAGES/bin:$PATH
+    PATH=$NPM_PACKAGES/bin:$PATH
   else
     export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
-    export PATH=/usr/local/lib/node_modules/bin:$PATH
+    PATH=/usr/local/lib/node_modules/bin:$PATH
   fi
 fi
 
-# SML
-if which sml >/dev/null && which brew > /dev/null; then
-  export PATH=/usr/local/smlnj/bin:"$PATH"
-fi
-
 export JAVA_HOME=$(/usr/libexec/java_home)
-export PATH=$PATH:${JAVA_HOME}/bin
-
-# RUST
-if which cargo>/dev/null; then
-  PATH="$HOME/.cargo/bin:$PATH"
-fi
-
-if [ -d $HOME/.roswell ]; then
-  export PATH="$HOME/.roswell/bin:$PATH"
-fi
+PATH=$PATH:${JAVA_HOME}/bin
 
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -103,5 +82,7 @@ if which fzf>/dev/null; then
   export FZF_DEFAULT_COMMAND
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 fi
+
+export PATH
 
 [ -f ~/.secrets/env ]; source ~/.secrets/env
