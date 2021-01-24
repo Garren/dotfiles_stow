@@ -118,11 +118,10 @@
 
 (global-set-key (kbd "M-`") 'other-frame)
 
-
 ;;; Offload the custom-set-variables to a separate file
 ;;; This keeps your init.el neater and you have the option
 ;;; to gitignore your custom.el if you see fit.
- (setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.emacs.d/custom.el")
  (unless (file-exists-p custom-file)
    (write-region "" nil custom-file))
 ;;; Load custom file. Don't hide errors. Hide success message
@@ -155,8 +154,18 @@
   (load-file (concat user-emacs-directory "init.el")))
 
 (use-package slime)
-(use-package paredit)
-(use-package rainbow-delimiters)
+(use-package paredit
+  :defer t
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'paredit-mode)
+  (add-hook 'clojurec-mode-hook 'paredit-mode)
+  (add-hook 'cider-repl-mode-hook 'paredit-mode))
+(use-package rainbow-delimiters
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 (use-package geiser)
 (use-package company)
 (use-package slime-company)
@@ -165,6 +174,24 @@
 (use-package helm)
 (use-package helm-slime)
 (use-package whole-line-or-region) ;; modify C-w so it kills a line the point is on if no active region
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+(use-package flycheck-clj-kondo)
+(use-package clojure-mode
+  :config
+  (require 'flycheck-clj-kondo))
+(use-package cider
+  :defer t
+  :init
+  (progn
+    (add-hook 'clojure-mode-hook 'cider-mode)
+    (add-hook 'clojurescript-mode-hook 'cider-mode)
+    (add-hook 'clojurec-mode-hook 'cider-mode)
+    (add-hook 'cider-repl-mode-hook 'cider-mode))
+  :config
+  (setq cider-repl-display-banner-help nil)
+  (setq cider-auto-mode nil))
 
 ;; M-x describe-personal-keybindings
 
