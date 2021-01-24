@@ -161,9 +161,18 @@
   (load-file (concat user-emacs-directory "init.el")))
 
 (use-package slime)
-(use-package paredit)
-(use-package rainbow-delimiters)
-
+(use-package paredit
+  :defer t
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode)
+  (add-hook 'clojurescript-mode-hook 'paredit-mode)
+  (add-hook 'clojurec-mode-hook 'paredit-mode)
+  (add-hook 'cider-repl-mode-hook 'paredit-mode))
+(use-package rainbow-delimiters
+  :defer t
+  :init
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 (use-package geiser
   :after paredit
   :config
@@ -200,6 +209,24 @@
 (use-package elpy)
 (use-package py-autopep8);; autopep8 formatting checker
 (use-package blacken)    ;; formatting
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+(use-package flycheck-clj-kondo)
+(use-package clojure-mode
+  :config
+  (require 'flycheck-clj-kondo))
+(use-package cider
+  :defer t
+  :init
+  (progn
+    (add-hook 'clojure-mode-hook 'cider-mode)
+    (add-hook 'clojurescript-mode-hook 'cider-mode)
+    (add-hook 'clojurec-mode-hook 'cider-mode)
+    (add-hook 'cider-repl-mode-hook 'cider-mode))
+  :config
+  (setq cider-repl-display-banner-help nil)
+  (setq cider-auto-mode nil))
 
 ;; M-x describe-personal-keybindings
 
