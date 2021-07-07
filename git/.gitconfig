@@ -29,3 +29,6 @@
 	date = relative
 [pull]
 	rebase = true
+[gui]
+	fontui = -family .AppleSystemUIFont -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Menlo -size 14 -weight normal -slant roman -underline 0 -overstrike 0

@@ -33,8 +33,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Navigation:
 Plug 'preservim/tagbar'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-easytags'
+"Plug 'xolox/vim-misc'
 "Snippets:
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -447,6 +447,7 @@ vnoremap fd <esc>
 " lel   : left one, end of word, left one
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>AA :%! python3 -m json.tool % <cr>
 
 if has("autocmd")
 autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab

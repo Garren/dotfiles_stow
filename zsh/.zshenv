@@ -43,7 +43,7 @@ fi
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
     export NPM_PACKAGES=$HOME/.node_packages
-    npm config set prefix $NPM_PACKAGES
+    npm config --no-update-notifier set prefix $NPM_PACKAGES
 
     export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
     export PATH=$NPM_PACKAGES/bin:$PATH
@@ -68,6 +68,10 @@ if which fzf>/dev/null; then
 
   export FZF_DEFAULT_COMMAND
   export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
+fi
+
+if [ -d $(python3 -m site --user-base) ]; then
+  PATH=$PATH:"$(python3 -m site --user-base)"/bin
 fi
 
 # Set PATH
