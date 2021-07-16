@@ -53,6 +53,7 @@ fi
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
     export NPM_PACKAGES=$HOME/.node_packages
+    npm config set update-notifier false
     npm config set prefix $NPM_PACKAGES
 
     export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
@@ -66,6 +67,7 @@ fi
 export JAVA_HOME=$(/usr/libexec/java_home)
 PATH=$PATH:${JAVA_HOME}/bin
 
+[ -f ~/.secrets/env ]; source ~/.secrets/env
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -84,5 +86,3 @@ if which fzf>/dev/null; then
 fi
 
 export PATH
-
-[ -f ~/.secrets/env ]; source ~/.secrets/env
