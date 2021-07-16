@@ -16,6 +16,11 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 [ -d $HOME/.roswell ] && PATH="$HOME/.roswell/bin:$PATH"
 [ -d /usr/local/opt/llvm/bin ] && PATH="$PATH:/usr/local/opt/llvm/bin"
 [ -d /usr/local/smlnj/bin ] && PATH=/usr/local/smlnj/bin:"$PATH"
+#[ -d /usr/local/anaconda3/bin ] && PATH="$PATH":/usr/local/anaconda3/bin
+[ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
+[ -d /usr/local/texlive/2021basic/bin/universal-darwin ] && PATH="$PATH:/usr/local/texlive/2021basic/bin/universal-darwin"
+[ -d ~/Library/Python/3.9/bin ] && PATH="$PATH":~/Library/Python/3.9/bin
+[ -d ~/.local/bin ] && PATH="$PATH":~/.local/bin
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
