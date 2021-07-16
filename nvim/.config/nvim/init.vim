@@ -24,6 +24,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
 "Golang:
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Rust:
+Plug 'rust-lang/rust.vim'
 "Autocomplete:
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-go'
