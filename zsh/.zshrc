@@ -33,3 +33,5 @@ PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(par
 
 [ -f /usr/local/opt/chruby/share/chruby/chruby.sh ] && source /usr/local/opt/chruby/share/chruby/chruby.sh
 [ -f /usr/local/opt/chruby/share/chruby/auto.sh ] && source /usr/local/opt/chruby/share/chruby/auto.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

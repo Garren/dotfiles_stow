@@ -12,13 +12,14 @@ endif
 
 set encoding=utf8
 
+let g:python3_host_prog='/usr/local/bin/python3'
+
 call plug#begin('~/.config/nvim/plugged')
 "File Search:
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "File Browser:
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -27,6 +28,8 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-go'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-bufword'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
@@ -41,17 +44,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
 "Todo
-" Plug 'pangloss/vim-javascript'
-" Plug 'elixir-editors/vim-elixir'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
-" Plug 'mustache/vim-mustache-handlebars'
-" Plug 'elmcast/elm-vim'
-" Plug 'posva/vim-vue'
 call plug#end()
 
+set clipboard=unnamed,unnamedplus
 "COPY/PASTE:
 "-----------
 "Increases the memory limit from 50 lines to 1000 lines
@@ -103,7 +101,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "FILE SEARCH:
 "------------
 "allows FZF to open by pressing CTRL-F
-map <C-f> :FZF<CR>
+noremap <C-f> :FZF<CR>
 
 " Nope. pull the default fzf command from env
 "let $FZF_DEFAULT_COMMAND = "find -L"
@@ -111,7 +109,9 @@ map <C-f> :FZF<CR>
 "FILE BROWSER:
 "-------------
 "allows NERDTree to open/close by typing 'n' then 't'
-map nt :NERDTreeTabsToggle<CR>
+noremap nt :NERDTreeTabsToggle<CR>
+noremap ntt :NERDTreeToggleVCS<CR>
+
 "Start NERDtree when dir is selected (e.g. "vim .") and start NERDTreeTabs
 let g:nerdtree_tabs_open_on_console_startup=2
 "Add a close button in the upper right for tabs
@@ -126,6 +126,9 @@ let g:NERDTreeDirArrowExpandable = "\u00a0"
 let g:NERDTreeDirArrowCollapsible = "\u00a0"
 let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
 highlight! link NERDTreeFlags NERDTreeDir
+
+" CtrlP ingorables
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 "SHORTCUTS:
 "----------
@@ -163,12 +166,12 @@ set dir=~/.local/share/nvim/swap/
 
 "GIT (FUGITIVE):
 "---------------
-map fgb :Gblame<CR>
-map fgs :Gstatus<CR>
-map fgl :Glog<CR>
-map fgd :Gdiff<CR>
-map fgc :Gcommit<CR>
-map fga :Git add %:p<CR>
+noremap fgb :Gblame<CR>
+noremap fgs :Gstatus<CR>
+noremap fgl :Glog<CR>
+noremap fgd :Gdiff<CR>
+noremap fgc :Gcommit<CR>
+noremap fga :Git add %:p<CR>
 
 "SYNTAX HIGHLIGHTING:
 "--------------------
@@ -181,8 +184,77 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " Highlight the current line the cursor is on
 set cursorline
 
+au FileType javascript setlocal formatprg=prettier
+au FileType javascript.jsx setlocal formatprg=prettier
+au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+au FileType html setlocal formatprg=js-beautify\ --type\ html
+au FileType scss setlocal formatprg=prettier\ --parser\ css
+au FileType css setlocal formatprg=prettier\ --parser\ css
+
+" write the content of a file when you call :make
+set autowrite
+
+" ERRORS
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
 " tabs are spaces
 set expandtab
+" show existing tabs with 2 space width
+set tabstop=2
+set softtabstop=2
+" when indenting with '>', use 2 space width
+set shiftwidth=2
+
+" GO:
+"--------------------
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+" Let go files use gofmt tabbing
+autocmd FileType go setlocal noexpandtab
+
+" building
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+"autocmd FileType go nmap <leader>b <Plug>(go-build)
+" running
+autocmd FileType go nmap <leader>r <Plug>(go-run)
+" testing
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+" identifier resolution
+autocmd FileType go nmap <Leader>i <Plug>(go-info)
+
+" 'alternate' commands
+" switch between a file and its test
+autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+" ...in a vertical split
+autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+" ...or a horizontal split
+autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+
+" These might impact performance
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_types = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+
+let g:go_auto_sameids = 1
+
+" GENERAL:
+" -----------------------
 
 " case insensitive search
 set ignorecase
@@ -192,7 +264,7 @@ set ignorecase
 set smartcase
 
 " highlight matches
-set hlsearch
+set nohlsearch
 
 " search as characters are entered 
 set incsearch
@@ -282,6 +354,9 @@ set directory=./.swap,~/.swap,/tmp
 
 " vertical splits happen below the active window
 set splitbelow
+
+" turn off wrapping
+set nowrap
 
 " set the titlestring on buffer open
 :auto BufEnter * let &titlestring = hostname() . "/" . expand("%:p")
