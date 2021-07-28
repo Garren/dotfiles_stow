@@ -27,3 +27,4 @@ alias docker-volume-remove='docker rm $(docker ps -aq) && docker volume rm re9-a
 alias vim='nvim'
 alias cat='bat'
 alias lsof3k='lsof -nP -i:3000'
+alias bsondump-all='find . -iname "*.bson" -exec bsondump --outFile="{}.json" {} \;'
