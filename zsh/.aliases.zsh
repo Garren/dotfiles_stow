@@ -19,3 +19,5 @@ alias lla='ls -al'
 #alias tmux="TERM=screen-256color-bce tmux"
 alias ssh='TERM=xterm-256color ssh'
 alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && say DNS cache flushed'
+alias vim=nvim
+alias vi=nvim

@@ -19,7 +19,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 #[ -d /usr/local/anaconda3/bin ] && PATH="$PATH":/usr/local/anaconda3/bin
 [ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
 [ -d /usr/local/texlive/2021basic/bin/universal-darwin ] && PATH="$PATH:/usr/local/texlive/2021basic/bin/universal-darwin"
-[ -d ~/Library/Python/3.9/bin ] && PATH="$PATH":~/Library/Python/3.9/bin
+[ -d ~/Library/Python/3.8/bin ] && PATH="$PATH":~/Library/Python/3.8/bin
 [ -d ~/.local/bin ] && PATH="$PATH":~/.local/bin
 
 if which nvim >/dev/null; then

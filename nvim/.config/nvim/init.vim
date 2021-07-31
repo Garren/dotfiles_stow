@@ -12,7 +12,7 @@ endif
 
 set encoding=utf8
 
-let g:python3_host_prog='/usr/local/bin/python3'
+let g:python3_host_prog='/usr/bin/python3'
 
 call plug#begin('~/.config/nvim/plugged')
 "File Search:
