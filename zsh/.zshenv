@@ -72,7 +72,7 @@ fi
 export JAVA_HOME=$(/usr/libexec/java_home)
 PATH=$PATH:${JAVA_HOME}/bin
 
-[ -f ~/.secrets/env ]; source ~/.secrets/env
+[ -f ~/.secrets/env ] && source ~/.secrets/env
 [ -f ~/.cargo/env ] && source ~/.cargo/env
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
