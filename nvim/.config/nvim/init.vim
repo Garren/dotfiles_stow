@@ -36,7 +36,7 @@ Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/
 "Snippets:
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
 "Plug 'airblade/vim-gitgutter' not vim-go friendly
@@ -97,6 +97,8 @@ inoremap <expr> <up> pumvisible() ? "\<C-E>" : "\<up>"
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsSnippetsDir="~/.config/nvim/snips"
+let g:UltiSnipsSnippetDirectories=["snips"]
 
 "FILE SEARCH:
 "------------
@@ -109,7 +111,7 @@ noremap <C-f> :FZF<CR>
 "FILE BROWSER:
 "-------------
 "allows NERDTree to open/close by typing 'n' then 't'
-noremap nt :NERDTreeTabsToggle<CR>
+noremap nt :NERDTreeToggle<CR>
 noremap ntt :NERDTreeToggleVCS<CR>
 
 "Start NERDtree when dir is selected (e.g. "vim .") and start NERDTreeTabs
@@ -251,7 +253,7 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 
-let g:go_auto_sameids = 1
+"let g:go_auto_sameids = 1
 
 " GENERAL:
 " -----------------------
