@@ -25,6 +25,8 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
 "Golang:
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"SML:
+Plug 'jez/vim-better-sml'
 "Autocomplete:
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-go'
@@ -46,6 +48,7 @@ Plug 'itchyny/lightline.vim'
 "Todo
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -90,6 +93,18 @@ inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
 "Allow getting out of pop with Down/Up arrow keys
 inoremap <expr> <down> pumvisible() ? "\<C-E>" : "\<down>"
 inoremap <expr> <up> pumvisible() ? "\<C-E>" : "\<up>"
+
+"ALE:
+"----
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '▲'
+"let g:airline#extensions#ale#enabled = 1
+" Open the loclist if there were errors
+let g:ale_open_list = 1
+" Only lint on save
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_enter = 0
 
 "SNIPPETS:
 "---------

@@ -21,4 +21,4 @@ alias ssh='TERM=xterm-256color ssh'
 alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && say DNS cache flushed'
 alias vim=nvim
 alias vi=nvim
-alias sml=rlwrap sml
+alias sml='rlwrap sml'
