@@ -21,3 +21,4 @@ alias ssh='TERM=xterm-256color ssh'
 alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder && say DNS cache flushed'
 #alias redis_start='redis-server /usr/local/etc/redis.conf'
 alias vim=nvim
+alias vi=nvim

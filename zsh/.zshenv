@@ -53,3 +53,6 @@ if which cargo>/dev/null; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+# disable dotnet telemetry
+export DOTNET_CLI_TELEMETRY_OPTOUT=1 
+

@@ -17,13 +17,13 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ervandew/supertab'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
 Plug 'elmcast/elm-vim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'junegunn/vader.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'jparise/vim-graphql'
-
+Plug 'evanleck/vim-svelte'
+Plug 'HerringtonDarkholme/yats.vim'
 call plug#end()
 
 filetype plugin indent on

@@ -2,3 +2,6 @@ vim/.vim/plugged
 vim/.vim/.netrwhist
 vim/.vim/view/
 vim/.vim/autoload/plug.vim.old
+nvim/.config/nvim/autoload
+nvim/.config/nvim/ftplugin
+nvim/.config/nvim/plugged
