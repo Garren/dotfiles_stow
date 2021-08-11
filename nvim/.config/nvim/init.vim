@@ -124,13 +124,13 @@ noremap <C-f> :FZF<CR>
 "FILE BROWSER:
 "-------------
 "allows NERDTree to open/close by typing 'n' then 't'
-noremap nt :NERDTreeTabsToggle<CR>
-noremap ntt :NERDTreeToggleVCS<CR>
+"noremap nt :NERDTreeTabsToggle<CR>
+noremap nt :NERDTreeToggleVCS<CR>
 
 "Start NERDtree when dir is selected (e.g. "vim .") and start NERDTreeTabs
-let g:nerdtree_tabs_open_on_console_startup=2
+"let g:nerdtree_tabs_open_on_console_startup=2
 "Add a close button in the upper right for tabs
-let g:tablineclosebutton=1
+"let g:tablineclosebutton=1
 "Automatically find and select currently opened file in NERDTree
 let g:nerdtree_tabs_autofind=1
 "Add folder icon to directories
@@ -268,6 +268,38 @@ let g:go_highlight_extra_types = 1
 
 let g:go_auto_sameids = 1
 
+" SML:
+" ----
+augroup vimbettersml
+  au!
+  " ----- Keybindings -----
+  au FileType sml nnoremap <silent> <buffer> <leader>t :SMLTypeQuery<CR>
+  au FileType sml nnoremap <silent> <buffer> gd :SMLJumpToDef<CR>
+
+  " open the REPL terminal buffer
+  au FileType sml nnoremap <silent> <buffer> <leader>is :SMLReplStart<CR>
+  " close the REPL (mnemonic: k -> kill)
+  au FileType sml nnoremap <silent> <buffer> <leader>ik :SMLReplStop<CR>
+  " build the project (using CM if possible)
+  au FileType sml nnoremap <silent> <buffer> <leader>ib :SMLReplBuild<CR>
+  " for opening a structure, not a file
+  au FileType sml nnoremap <silent> <buffer> <leader>io :SMLReplOpen<CR>
+  " use the current file into the REPL (even if using CM)
+  au FileType sml nnoremap <silent> <buffer> <leader>iu :SMLReplUse<CR>
+  " clear the REPL screen
+  au FileType sml nnoremap <silent> <buffer> <leader>ic :SMLReplClear<CR>
+  " set the print depth to 100
+  au FileType sml nnoremap <silent> <buffer> <leader>ip :SMLReplPrintDepth<CR>
+
+  " ----- Other settings -----
+
+  " Uncomment to try out conceal characters
+  "au FileType sml setlocal conceallevel=2
+
+  " Uncomment to try out same-width conceal characters
+  "let g:sml_greek_tyvar_show_tick = 1
+augroup END
+
 " GENERAL:
 " -----------------------
 
@@ -391,6 +423,11 @@ nnoremap <Leader>bp :bp<CR>
 nnoremap <Leader>bd :bd<CR>
 
 inoremap fd <esc>
+tnoremap fd <C-\><C-n>
+tnoremap <C-w>h <C-\><C-n><C-w>h
+tnoremap <C-w>j <C-\><C-n><C-w>j
+tnoremap <C-w>k <C-\><C-n><C-w>k
+tnoremap <C-w>l <C-\><C-n><C-w>l
 
 " viw   : hightlight current word
 " <esc> : leave visual 
