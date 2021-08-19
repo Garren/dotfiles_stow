@@ -37,8 +37,8 @@ Plug 'preservim/tagbar'
 "Plug 'xolox/vim-easytags'
 "Plug 'xolox/vim-misc'
 "Snippets:
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
 "Var:
