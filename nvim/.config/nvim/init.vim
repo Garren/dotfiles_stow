@@ -31,6 +31,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
 "Autocomplete:
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 "Navigation:
 Plug 'preservim/tagbar'
 "Plug 'xolox/vim-easytags'
@@ -417,6 +418,11 @@ set directory=./.swap,~/.swap,/tmp
 
 " vertical splits happen below the active window
 set splitbelow
+
+" folding
+set foldmethod=syntax
+" don't fold files on first open
+set nofoldenable
 
 " set the titlestring on buffer open
 :auto BufEnter * let &titlestring = hostname() . "/" . expand("%:p")
