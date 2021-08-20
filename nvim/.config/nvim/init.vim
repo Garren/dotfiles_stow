@@ -10,49 +10,62 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 
 endif
 
-set encoding=utf8
+set encoding=UTF-8
 
-let g:python3_host_prog='/usr/local/bin/python3'
+" verify python3 is loaded:
+" :echo has("python3")
+" install whatever this thing is
+" pip3 install --user pynvim
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
 
 call plug#begin('~/.config/nvim/plugged')
-"Language Server:
-Plug 'neovim/nvim-lspconfig'
 "File Search:
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "File Browser:
 Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
-"Golang:
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Autocomplete:
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-go'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-bufword'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'stamblerre/gocode', { 'rtp': 'nvim', 'do': '~/.config/nvim/plugged/gocode/nvim/symlink.sh' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+"Navigation:
+Plug 'preservim/tagbar'
 "Snippets:
-Plug 'ncm2/ncm2-ultisnips'
 Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter' not vim-go friendly
 "Var:
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
-"Todo
-Plug 'pangloss/vim-javascript'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'ionide/Ionide-vim'
-
+Plug 'ryanoasis/vim-devicons'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
-set clipboard=unnamed,unnamedplus
+" ----------------------------------------------------------------------------
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+" ----------------------------------------------------------------------------
+
 "COPY/PASTE:
 "-----------
 "Increases the memory limit from 50 lines to 1000 lines
@@ -62,11 +75,28 @@ set clipboard=unnamed,unnamedplus
 "----------
 :set number
 
+"VARIOUS:
+"--------
+set nohlsearch
+set nowrap
+set autoread
+
 "INDENTATION:
 "------------
 "Highlights code for multiple indents without reselecting
 vnoremap < <gv
 vnoremap > >gv
+
+" WHITESPACE HIGHTLIGHT
+"-----
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 
 "COLOR:
 "------
@@ -76,37 +106,153 @@ colorscheme molokai
 "------------
 let g:go_fmt_command = "goimports"
 
-"AUTOCOMPLETE:
-"-------------
-augroup ncm2
-  au!
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  set completeopt=noinsert,menuone,noselect
-  au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-  au User Ncm2PopupClose set completeopt=menuone
-augroup END
-"Press Enter to select item in autocomplete popup
-inoremap <silent> <expr> <CR> (pumvisible() ? ncm2_ultisnips#expand_or("\<CR>", 'n') : "\<CR>")
-"Cycle through completion entries with tab/shift+tab
-inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
-inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
-"Allow getting out of pop with Down/Up arrow keys
-inoremap <expr> <down> pumvisible() ? "\<C-E>" : "\<down>"
-inoremap <expr> <up> pumvisible() ? "\<C-E>" : "\<up>"
+""AUTOCOMPLETE:
+""-------------
+" TextEdit might fail if hidden is not set.
+set hidden
 
-"SNIPPETS:
-"---------
-"Change default expand since TAB is used to cycle options
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsSnippetsDir="~/.config/nvim/snips"
-let g:UltiSnipsSnippetDirectories=["snips"]
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+     \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR> 
 
 "FILE SEARCH:
 "------------
 "allows FZF to open by pressing CTRL-F
-noremap <C-f> :FZF<CR>
+map <C-f> :FZF<CR>
 
 " Nope. pull the default fzf command from env
 "let $FZF_DEFAULT_COMMAND = "find -L"
@@ -114,9 +260,7 @@ noremap <C-f> :FZF<CR>
 "FILE BROWSER:
 "-------------
 "allows NERDTree to open/close by typing 'n' then 't'
-noremap nt :NERDTreeToggle<CR>
-noremap ntt :NERDTreeToggleVCS<CR>
-
+map nt :NERDTreeTabsToggle<CR>
 "Start NERDtree when dir is selected (e.g. "vim .") and start NERDTreeTabs
 let g:nerdtree_tabs_open_on_console_startup=2
 "Add a close button in the upper right for tabs
@@ -132,8 +276,11 @@ let g:NERDTreeDirArrowCollapsible = "\u00a0"
 let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
 highlight! link NERDTreeFlags NERDTreeDir
 
-" CtrlP ingorables
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+"SNIPPETS:
+"---------
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 "SHORTCUTS:
 "----------
@@ -171,12 +318,12 @@ set dir=~/.local/share/nvim/swap/
 
 "GIT (FUGITIVE):
 "---------------
-noremap fgb :Gblame<CR>
-noremap fgs :Gstatus<CR>
-noremap fgl :Glog<CR>
-noremap fgd :Gdiff<CR>
-noremap fgc :Gcommit<CR>
-noremap fga :Git add %:p<CR>
+map fgb :Gblame<CR>
+map fgs :Gstatus<CR>
+map fgl :Glog<CR>
+map fgd :Gdiff<CR>
+map fgc :Gcommit<CR>
+map fga :Git add %:p<CR>
 
 "SYNTAX HIGHLIGHTING:
 "--------------------
@@ -189,77 +336,8 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " Highlight the current line the cursor is on
 set cursorline
 
-au FileType javascript setlocal formatprg=prettier
-au FileType javascript.jsx setlocal formatprg=prettier
-au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
-au FileType html setlocal formatprg=js-beautify\ --type\ html
-au FileType scss setlocal formatprg=prettier\ --parser\ css
-au FileType css setlocal formatprg=prettier\ --parser\ css
-
-" write the content of a file when you call :make
-set autowrite
-
-" ERRORS
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
-
 " tabs are spaces
 set expandtab
-" show existing tabs with 2 space width
-set tabstop=2
-set softtabstop=2
-" when indenting with '>', use 2 space width
-set shiftwidth=2
-
-" GO:
-"--------------------
-" run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-" Let go files use gofmt tabbing
-autocmd FileType go setlocal noexpandtab
-
-" building
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-"autocmd FileType go nmap <leader>b <Plug>(go-build)
-" running
-autocmd FileType go nmap <leader>r <Plug>(go-run)
-" testing
-autocmd FileType go nmap <leader>t <Plug>(go-test)
-" identifier resolution
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
-
-" 'alternate' commands
-" switch between a file and its test
-autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-" ...in a vertical split
-autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-" ...or a horizontal split
-autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-let g:go_metalinter_autosave = 1
-
-" These might impact performance
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_types = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-
-"let g:go_auto_sameids = 1
-
-" GENERAL:
-" -----------------------
 
 " case insensitive search
 set ignorecase
@@ -269,7 +347,7 @@ set ignorecase
 set smartcase
 
 " highlight matches
-set nohlsearch
+"set hlsearch
 
 " search as characters are entered 
 set incsearch
@@ -286,7 +364,7 @@ set relativenumber
 
 " keep 3 lines above or below the cursor 
 " when near the top or bottom of the screen
-set scrolloff=3
+set scrolloff=20
 
 " show the mode (insert, normal, visual) in the 
 " last line
@@ -360,8 +438,10 @@ set directory=./.swap,~/.swap,/tmp
 " vertical splits happen below the active window
 set splitbelow
 
-" turn off wrapping
-set nowrap
+" folding
+set foldmethod=syntax
+" don't fold files on first open
+set nofoldenable
 
 " set the titlestring on buffer open
 :auto BufEnter * let &titlestring = hostname() . "/" . expand("%:p")
@@ -381,9 +461,10 @@ nnoremap <Leader>bp :bp<CR>
 nnoremap <Leader>bd :bd<CR>
 
 inoremap fd <esc>
+vnoremap fd <esc>
 
 " viw   : hightlight current word
-" <esc> : leave visual 
+" <esc> : leave visual
 " a"    : append a quote after word
 " <esc> : leave insert
 " hbi"  : right one, beginning of word, insert quote
@@ -391,7 +472,17 @@ inoremap fd <esc>
 " lel   : left one, end of word, left one
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>AA :%! python3 -m json.tool % <cr>
 
 if has("autocmd")
 autocmd FileType zsh setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javascript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 endif
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+set clipboard^=unnamed " use the system clipboard
+set list listchars=eol:¬,tab:≫∙,trail:~,nbsp:∙,extends:>,precedes:< ",space:␣ " display extra white space
+
+"Navigation
+nmap <F8> :TagbarToggle<CR>
