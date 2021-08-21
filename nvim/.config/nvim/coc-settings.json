@@ -1,0 +1,22 @@
+"languageserver": {
+  "clangd": {
+    "command": "clangd",
+    "rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+    "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+  }
+  ,"clojure-lsp": {
+    "command": "bash",
+    "args": ["-c", "clojure-lsp"],
+    "filetypes": ["clojure"],
+    "rootPatterns": ["project.clj"],
+    "additionalSchemes": ["jar", "zipfile"],
+    "trace.server": "verbose",
+    "initializationOptions": {
+    }
+  }
+  ,"sql": {
+    "command": "sql-language-server",
+    "args" : ["up", "--method", "stdio"],
+    "filetypes": ["sql", "mysql"]
+    }
+}
