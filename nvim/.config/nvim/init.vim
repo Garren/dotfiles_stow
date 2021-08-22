@@ -81,6 +81,7 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 set nohlsearch
 set nowrap
 set autoread
+set nolist
 
 "INDENTATION:
 "------------
