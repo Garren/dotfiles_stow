@@ -46,6 +46,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
+" coc-snippets
 " ----------------------------------------------------------------------------
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
