@@ -44,6 +44,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
+Plug 'jez/vim-better-sml'
 call plug#end()
 
 " ----------------------------------------------------------------------------
