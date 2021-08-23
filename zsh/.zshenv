@@ -41,7 +41,7 @@ if [ -d $HOME/Library/Python/3.9/bin ]; then
 fi
 
 # SML
-if which sml >/dev/null && which brew > /dev/null; then
+if [ -d /usr/local/smlnj/bin ]; then
   PATH=/usr/local/smlnj/bin:"$PATH"
 fi
 
