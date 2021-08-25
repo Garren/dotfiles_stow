@@ -34,13 +34,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 "Navigation:
 Plug 'preservim/tagbar'
-"Plug 'xolox/vim-easytags'
-"Plug 'xolox/vim-misc'
-"Snippets:
-"Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
+Plug 'APZelos/blamer.nvim'
 "Var:
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
@@ -467,3 +463,8 @@ set list listchars=eol:¬,tab:≫∙,trail:~,nbsp:∙,extends:>,precedes:< ",spa
 
 "Navigation
 nmap <F8> :TagbarToggle<CR>
+
+"Blamer
+let g:blamer_enabled=0
+let g:blamer_delay=500
+let g:blamer_date_format='%Y-%m-%d %H:%M'
