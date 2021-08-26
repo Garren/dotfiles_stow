@@ -25,7 +25,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "File Browser:
 Plug 'scrooloose/nerdtree'
-Plug 'jistr/vim-nerdtree-tabs'
+"Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -35,8 +35,8 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 "Navigation:
 Plug 'preservim/tagbar'
 "Snippets:
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
 "Git:
 Plug 'tpope/vim-fugitive'
 "Var:
@@ -46,26 +46,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 
-" coc-snippets
-" ----------------------------------------------------------------------------
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
-" ----------------------------------------------------------------------------
 
 "COPY/PASTE:
 "-----------
@@ -81,7 +61,6 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 set nohlsearch
 set nowrap
 set autoread
-set nolist
 
 "INDENTATION:
 "------------
@@ -104,9 +83,9 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 "------
 colorscheme molokai
 
-"AUTO IMPORT:
-"------------
-let g:go_fmt_command = "goimports"
+""AUTO IMPORT:
+""------------
+"let g:go_fmt_command = "goimports"
 
 " Coc.vim example config start
 "------------------------------------------------------
@@ -253,6 +232,24 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
+autocmd FileType go nmap gty :CocCommand go.tags.add yaml<cr>
+autocmd FileType go nmap gtx :CocCommand go.tags.clear<cr>
+
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+\ },
+\ 'component_function': {
+\   'cocstatus': 'coc#status'
+\ },
+\ }
+
+" Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
@@ -277,6 +274,31 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Coc.vim example config end
 "----------------------------------------------------------------------
+"
+"" coc-snippets
+"" ----------------------------------------------------------------------------
+"" Use <C-l> for trigger snippet expand.
+"imap <C-l> <Plug>(coc-snippets-expand)
+
+"" Use <C-j> for select text for visual placeholder of snippet.
+"vmap <C-j> <Plug>(coc-snippets-select)
+
+"" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+"let g:coc_snippet_next = '<c-j>'
+
+"" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+"let g:coc_snippet_prev = '<c-k>'
+
+"" Use <C-j> for both expand and jump (make expand higher priority.)
+"imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+"" Use <leader>x for convert visual selected code to snippet
+"xmap <leader>x  <Plug>(coc-convert-snippet)
+"" ----------------------------------------------------------------------------
+"
+" GO add imports on save:
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 
 "FILE SEARCH:
 "------------
@@ -289,7 +311,7 @@ map <C-f> :FZF<CR>
 "FILE BROWSER:
 "-------------
 "allows NERDTree to open/close by typing 'n' then 't'
-map nt :NERDTreeTabsToggle<CR>
+map nt :NERDTreeToggle<CR>
 "Start NERDtree when dir is selected (e.g. "vim .") and start NERDTreeTabs
 let g:nerdtree_tabs_open_on_console_startup=2
 "Add a close button in the upper right for tabs
@@ -512,6 +534,7 @@ endif
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 set clipboard^=unnamed " use the system clipboard
 set list listchars=eol:¬,tab:≫∙,trail:~,nbsp:∙,extends:>,precedes:< ",space:␣ " display extra white space
+set nolist
 
 "Navigation
 nmap <F8> :TagbarToggle<CR>
