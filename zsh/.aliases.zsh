@@ -22,3 +22,6 @@ alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 
 #alias redis_start='redis-server /usr/local/etc/redis.conf'
 alias vim=nvim
 alias vi=nvim
+alias sml="rlwrap sml"
+alias smlnj="rlwrap sml"
+alias fsi="dotnet fsi"
