@@ -45,8 +45,9 @@ if [ -d /usr/local/smlnj/bin ]; then
   PATH=/usr/local/smlnj/bin:"$PATH"
 fi
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 13.0.1)
-PATH=$PATH:${JAVA_HOME}/bin
+export JDK_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=${JDK_HOME}
+PATH=$PATH:${JDK_HOME}/bin
 
 # RUST
 if which cargo>/dev/null; then
