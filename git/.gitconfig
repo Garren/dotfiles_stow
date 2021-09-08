@@ -10,7 +10,7 @@
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
         untracked= ls-files -o --exclude-standard
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = /Users/adamgarren/.gitignore_global
 [color]
 	branch = auto
