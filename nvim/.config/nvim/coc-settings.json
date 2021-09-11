@@ -1,5 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["go"],
+  "java.home": "/Library/Java/JavaVirtualMachines/temurin-16.jdk/Contents/Home",
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-16",
