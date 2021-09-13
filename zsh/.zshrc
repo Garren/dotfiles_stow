@@ -28,6 +28,3 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 setopt PROMPT_SUBST
 NEWLINE=$'\n'
 PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(parse_git_branch)%f${NEWLINE}$ "
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
