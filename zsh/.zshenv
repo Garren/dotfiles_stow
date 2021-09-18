@@ -3,6 +3,7 @@
 export EDITOR="vim"
 export VISUAL="vim"
 export ESHELL=/bin/zsh
+export SSLKEYLOGFILE=~/.ssl_key_log_file.log
 
 # Elixir/Erlang
 # Enable shell history for elixir
@@ -17,14 +18,14 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 [ -d /usr/local/opt/llvm/bin ] && PATH="$PATH:/usr/local/opt/llvm/bin"
 [ -d /usr/local/smlnj/bin ] && PATH=/usr/local/smlnj/bin:"$PATH"
 #[ -d /usr/local/anaconda3/bin ] && PATH="$PATH":/usr/local/anaconda3/bin
-[ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
+#[ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
 [ -d /usr/local/texlive/2021basic/bin/universal-darwin ] && PATH="$PATH:/usr/local/texlive/2021basic/bin/universal-darwin"
 [ -d ~/Library/Python/3.9/bin ] && PATH="$PATH":~/Library/Python/3.9/bin
 [ -d ~/.local/bin ] && PATH="$PATH":~/.local/bin
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
-  export EDITOR="vim"
+  export EDITOR="nvim"
   export VIMCONFIG=~/.config/nvim
   export VIMDATA=~/.local/share/nvim
 
@@ -55,6 +56,12 @@ if which go >/dev/null; then
 fi
 
 # NODE
+#
+#For compilers to find node@14 you may need to set:
+#  export LDFLAGS="-L/usr/local/opt/node@14/lib"
+#  export CPPFLAGS="-I/usr/local/opt/node@14/include"
+
+#PATH="/usr/local/opt/node@14/bin:$PATH"
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
     export NPM_PACKAGES=$HOME/.node_packages
