@@ -17,21 +17,21 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 [ -d /usr/local/opt/llvm/bin ] && PATH="$PATH:/usr/local/opt/llvm/bin"
 [ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
 [ -d /usr/local/texlive/2021basic/bin/universal-darwin ] && PATH="$PATH:/usr/local/texlive/2021basic/bin/universal-darwin"
-[ -d ~/Library/Python/3.8/bin ] && PATH="$PATH":~/Library/Python/3.8/bin
-[ -d ~/.local/bin ] && PATH="$PATH":~/.local/bin
+[ -d $HOME/Library/Python/3.8/bin ] && PATH="$PATH":$HOME/Library/Python/3.8/bin
+[ -d $HOME/.local/bin ] && PATH="$PATH":$HOME/.local/bin
 [ -d /usr/local/smlnj/bin ] && PATH=$PATH:/usr/local/smlnj/bin
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
   export EDITOR="vim"
-  export VIMCONFIG=~/.config/nvim
-  export VIMDATA=~/.local/share/nvim
+  export VIMCONFIG=$HOME/.config/nvim
+  export VIMDATA=$HOME/.local/share/nvim
 
   alias vim=nvim
   alias vi=nvim
 else
-  export VIMCONFIG=~/.vimrc
-  export VIMDATA=~/.vim
+  export VIMCONFIG=$HOME/.vimrc
+  export VIMDATA=$HOME/.vim
 fi
 
 # GO
@@ -71,9 +71,9 @@ fi
 export JAVA_HOME=$(/usr/libexec/java_home)
 PATH=$PATH:${JAVA_HOME}/bin
 
-[ -f ~/.secrets/env ] && source ~/.secrets/env
-[ -f ~/.cargo/env ] && source ~/.cargo/env
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f $HOME/.secrets/env ] && source $HOME/.secrets/env
+[ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
+[ -f $HOME/.fzf.zsh ] && source $HOME.fzf.zsh
 
 if which fzf>/dev/null; then
 

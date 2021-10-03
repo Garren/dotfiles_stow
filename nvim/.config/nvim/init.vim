@@ -109,9 +109,11 @@ let g:ale_lint_on_enter = 0
 "SNIPPETS:
 "---------
 "Change default expand since TAB is used to cycle options
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsSnippetsDir="~/.config/nvim/snips"
+let g:UltiSnipsSnippetDirectories=["snips"]
 
 "FILE SEARCH:
 "------------
