@@ -68,6 +68,9 @@ set autoread
 vnoremap < <gv
 vnoremap > >gv
 
+highlight link NonASCII Error
+autocmd Syntax * :syntax match NonASCII "[^\d0-\d127]"
+
 " WHITESPACE HIGHTLIGHT
 "-----
 highlight ExtraWhitespace ctermbg=red guibg=red
