@@ -28,3 +28,7 @@ alias vim='nvim'
 alias cat='bat'
 alias lsof3k='lsof -nP -i:3000'
 alias bsondump-all='find . -iname "*.bson" -exec bsondump --outFile="{}.json" {} \;'
+
+function rebase-fix() {
+  git status | grep 'deleted by' | awk '{print $4}' | xargs -I{} git rm {}
+}

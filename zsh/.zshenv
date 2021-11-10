@@ -6,7 +6,6 @@ export ESHELL=/bin/zsh
 
 export SSLKEYLOGFILE=~/.ssl-key.log
 
-
 if which nvim >/dev/null; then
   export VISUAL="nvim"
   export EDITOR="vim"
@@ -77,12 +76,9 @@ fi
 # Set PATH
 export PATH=$PATH:$HOME/bin
 
-# HOMEBREW
-[ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
-[ -d "/usr/local/bin" ] && export PATH=/usr/local/bin:$PATH
+# lunar vim
+[ -d "$HOME/.local/bin" ] && PATH=$PATH:$HOME/.local/bin
 
-[ -f ~/.secrets/env ] && source ~/.secrets/env
-[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.cargo/env ] && source ~/.cargo/env
+# HOMEBREW
+[ -d "/usr/local/sbin" ] && PATH=/usr/local/sbin:$PATH
+[ -d "/usr/local/bin" ] && PATH=/usr/local/bin:$PATH
