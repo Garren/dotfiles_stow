@@ -25,7 +25,8 @@ if which go >/dev/null; then
   # still used in older documentation
   # https://www.digitalocean.com/community/tutorials/understanding-the-gopath
   if which brew>/dev/null; then
-    export GOROOT="$(brew --prefix golang)/libexec"
+    export GOROOT='/usr/local/opt/go/libexec'
+    #export GOROOT="$(brew --prefix golang)/libexec"
   fi
 
   # Set the root path of a single go workspace
@@ -42,7 +43,7 @@ fi
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
     export NPM_PACKAGES=$HOME/.node_packages
-    npm config --no-update-notifier set prefix $NPM_PACKAGES
+    #npm config --no-update-notifier set prefix $NPM_PACKAGES
 
     export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
     export PATH=$NPM_PACKAGES/bin:$PATH
@@ -70,7 +71,8 @@ if which fzf>/dev/null; then
 fi
 
 if [ -d $(python3 -m site --user-base) ]; then
-  PATH=$PATH:"$(python3 -m site --user-base)"/bin
+  PATH=$PATH:/Users/adamgarren/Library/Python/3.9/bin
+  #PATH=$PATH:"$(python3 -m site --user-base)"/bin
 fi
 
 # Set PATH
@@ -82,3 +84,4 @@ export PATH=$PATH:$HOME/bin
 # HOMEBREW
 [ -d "/usr/local/sbin" ] && PATH=/usr/local/sbin:$PATH
 [ -d "/usr/local/bin" ] && PATH=/usr/local/bin:$PATH
+[ -d "/usr/local/opt/curl/bin" ] && PATH=/usr/local/opt/curl/bin:$PATH

@@ -43,7 +43,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 
