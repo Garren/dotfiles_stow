@@ -42,7 +42,7 @@ if which go >/dev/null; then
   # still used in older documentation
   # https://www.digitalocean.com/community/tutorials/understanding-the-gopath
   if which brew>/dev/null; then
-    export GOROOT="$(brew --prefix golang)/libexec"
+    export GOROOT="/usr/local/opt/go/libexec"
   fi
 
   # Set the root path of a single go workspace
@@ -57,26 +57,26 @@ fi
 
 # NODE
 #
-#For compilers to find node@14 you may need to set:
-#  export LDFLAGS="-L/usr/local/opt/node@14/lib"
-#  export CPPFLAGS="-I/usr/local/opt/node@14/include"
-
 #PATH="/usr/local/opt/node@14/bin:$PATH"
+#export LDFLAGS="-L/usr/local/opt/node@14/lib"
+#export CPPFLAGS="-I/usr/local/opt/node@14/include"
+
 if which node >/dev/null && which npm >/dev/null; then
   if [ -d $HOME/.node_packages ]; then
-    export NPM_PACKAGES=$HOME/.node_packages
-    npm config set update-notifier false
-    npm config set prefix $NPM_PACKAGES
+    #export NPM_PACKAGES=$HOME/.node_packages
+    #npm config set update-notifier false
+    #npm config set prefix $NPM_PACKAGES
 
-    export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
-    PATH=$NPM_PACKAGES/bin:$PATH
+    #export NODE_PATH=$NPM_PACKAGES:$NODE_PATH
+    #PATH=$NPM_PACKAGES/bin:$PATH
+    PATH=$HOME/.node_packages/bin:$PATH
   else
     export NODE_PATH=/usr/local/lib/node_modules:$NODE_PATH
     PATH=/usr/local/lib/node_modules/bin:$PATH
   fi
 fi
 
-export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME="/usr/local/Cellar/openjdk@11/11.0.12/libexec/openjdk.jdk/Contents/Home"
 PATH=$PATH:${JAVA_HOME}/bin
 
 [ -f ~/.secrets/env ] && source ~/.secrets/env
