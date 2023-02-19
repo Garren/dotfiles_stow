@@ -20,6 +20,10 @@ function parse_git_branch {
   echo "("${ref#refs/heads/}")"
 }
 
+function md {
+  mkdir $1 && cd $1
+}
+
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -35,3 +39,6 @@ PROMPT="%F{045}[%0m]%f%F{205}%~%f:%F{139}%(1j.(%j%).)%f%F{129}%?%f%F{229} \$(par
 [ -f /usr/local/opt/chruby/share/chruby/auto.sh ] && source /usr/local/opt/chruby/share/chruby/auto.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# opam configuration
+[[ ! -r /Users/adamgarren/.opam/opam-init/init.zsh ]] || source /Users/adamgarren/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

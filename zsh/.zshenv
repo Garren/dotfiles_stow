@@ -8,18 +8,25 @@ export ESHELL=/bin/zsh
 # Enable shell history for elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+[ -d /opt/homebrew/bin ] && PATH=$PATH:/opt/homebrew/bin && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 [ -d $HOME/bin ] && PATH="$PATH:$HOME/bin"
 [ -d "/usr/local/sbin" ] && PATH=/usr/local/sbin:$PATH
 [ -d "/usr/local/bin" ] && PATH=/usr/local/bin:$PATH
 [ -d "/usr/local/protobuf/bin" ] && PATH="$PATH:/usr/local/protobuf/bin"
 [ -d $HOME/.cargo/bin ] && PATH="$HOME/.cargo/bin:$PATH"
+[ -d $HOME/go/bin ] && PATH="$HOME/go/bin:$PATH"
+[ -d $HOME/.emacs.d/bin ] && PATH="$HOME/.emacs.d/bin:$PATH"
 [ -d $HOME/.roswell ] && PATH="$HOME/.roswell/bin:$PATH"
 [ -d /usr/local/opt/llvm/bin ] && PATH="$PATH:/usr/local/opt/llvm/bin"
-[ -d /usr/local/anaconda3/bin ] && PATH=/usr/local/anaconda3/bin:$PATH
+[ -d /opt/homebrew/anaconda3/bin ] && PATH=/opt/homebrew/anaconda3/bin:$PATH
 [ -d /usr/local/texlive/2021basic/bin/universal-darwin ] && PATH="$PATH:/usr/local/texlive/2021basic/bin/universal-darwin"
 [ -d $HOME/Library/Python/3.8/bin ] && PATH="$PATH":$HOME/Library/Python/3.8/bin
 [ -d $HOME/.local/bin ] && PATH="$PATH":$HOME/.local/bin
 [ -d /usr/local/smlnj/bin ] && PATH=$PATH:/usr/local/smlnj/bin
+[ -d $HOME/.dotnet/tools ] && PATH="$PATH:/Users/adamgarren/.dotnet/tools"
+
+export DOTNET_ROOT="$(brew --prefix)/opt/dotnet/libexec"
 
 if which nvim >/dev/null; then
   export VISUAL="nvim"
@@ -49,7 +56,7 @@ if which go >/dev/null; then
   # export GOPATH=$HOME/.go
 
   # assume recent version of go
-  #export GO111MODULE=auto
+  export GO111MODULE=auto
   PATH=$PATH:${GOPATH//://bin:}/bin:${GOROOT//://bin:}/bin
 fi
 
@@ -73,7 +80,7 @@ PATH=$PATH:${JAVA_HOME}/bin
 
 [ -f $HOME/.secrets/env ] && source $HOME/.secrets/env
 [ -f $HOME/.cargo/env ] && source $HOME/.cargo/env
-[ -f $HOME/.fzf.zsh ] && source $HOME.fzf.zsh
+[ -f $HOME/.fzf.zsh ] && source $HOME/.fzf.zsh
 
 if which fzf>/dev/null; then
 

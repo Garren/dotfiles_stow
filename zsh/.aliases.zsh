@@ -22,3 +22,5 @@ alias flushdns='sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder 
 alias vim=nvim
 alias vi=nvim
 alias sml='rlwrap sml'
+alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+alias tim='vim mktemp'

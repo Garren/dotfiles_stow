@@ -27,6 +27,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "SML:
 Plug 'jez/vim-better-sml'
+"Idris"
+Plug 'idris-hackers/idris-vim'
 "Autocomplete:
 Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-go'
